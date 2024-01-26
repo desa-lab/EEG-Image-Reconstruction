@@ -1,1 +1,1 @@
-# things-decoding
+# meg-decoding
