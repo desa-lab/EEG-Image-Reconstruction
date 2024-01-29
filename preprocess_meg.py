@@ -58,7 +58,7 @@ for session, task, run in tqdm(product(sessions, tasks, runs), total=len(session
     raw = read_raw_bids(bids_path, verbose='ERROR')
     raw.set_channel_types(ch_type_map, verbose='ERROR')
     events, event_dict = mne.events_from_annotations(raw, verbose='ERROR')
-    epochs = mne.Epochs(raw, events, event_id=event_dict, tmin=-0.5, tmax=1.0, baseline=(-0.3, 0), preload=True, picks='mag', verbose='ERROR').resample(120, npad="auto", verbose='ERROR')
+    epochs = mne.Epochs(raw, events, event_id=event_dict, tmin=-0.3, tmax=1.0, baseline=(-0.3, 0), preload=True, picks='mag', verbose='ERROR').resample(120, npad="auto", verbose='ERROR')
     epochs.crop(tmin=0.0, tmax=epochs.tmax, verbose=False);
     epochs.filter(0, 40, verbose=False);
     epochs.apply_function(clipping, n_std = 5, verbose=False);
@@ -71,6 +71,7 @@ for session, task, run in tqdm(product(sessions, tasks, runs), total=len(session
 
 # %%
 print(train_meg.shape, test_meg.shape)
+# (22248, 272, 120) (2400, 272, 120)
 
 # %%
 save_dir = 'cache/processed_data/' + subject + '/'
