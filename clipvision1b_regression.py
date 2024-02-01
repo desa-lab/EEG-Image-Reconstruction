@@ -73,7 +73,7 @@ subject = 'BIGMEG1'
 save_dir = 'cache/predicted_embeddings/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + f'thingsmeg_regress_clipvision_sub-{subject}.npy', pred_clip)
+np.save(save_dir + f'thingsmeg_regress_clipvision1b_sub-{subject}.npy', pred_clip)
 
 
 datadict = {
@@ -89,5 +89,5 @@ subject = 'BIGMEG1'
 save_dir = 'cache/regression_weights/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-with open(save_dir + f'thingsmeg_regress_clipvision_weights_sub-{subject}.pkl', "wb") as f:
+with open(save_dir + f'thingsmeg_regress_clipvision1b_weights_sub-{subject}.pkl', "wb") as f:
     pickle.dump(datadict,f)
