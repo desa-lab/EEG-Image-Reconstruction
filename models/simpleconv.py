@@ -207,9 +207,10 @@ class SimpleConv(nn.Module):
         self.encoders = nn.ModuleDict({name: ConvSequence(channels, **params)
                                        for name, channels in sizes.items()})
 
-    def forward(self, inputs, batch):
-        subjects = batch.subject_index
-        length = next(iter(inputs.values())).shape[-1]  # length of any of the inputs
+    def forward(self, inputs, batch = None, subjects = None):
+        # subjects = batch.subject_index
+        # length = next(iter(inputs.values())).shape[-1]  # length of any of the inputs
+        length = 272
 
         if self.subsampled_meg_channels is not None:
             mask = torch.zeros_like(inputs["meg"][:1, :, :1])
@@ -223,10 +224,14 @@ class SimpleConv(nn.Module):
             inputs["meg"] = self.merger(inputs["meg"], batch)
 
         if self.initial_linear is not None:
-            inputs["meg"] = self.initial_linear(inputs["meg"])
+            # inputs["meg"] = self.initial_linear(inputs["meg"])
+            inputs = self.initial_linear(inputs)
+            print('initial linear: ' + str(inputs.shape))
 
         if self.subject_layers is not None:
-            inputs["meg"] = self.subject_layers(inputs["meg"], subjects)
+            # inputs["meg"] = self.subject_layers(inputs["meg"], subjects)
+            inputs = self.subject_layers(inputs, subjects)
+            print('subject layers: ' + str(inputs.shape))
 
         if self.stft is not None:
             x = inputs["meg"]
@@ -238,21 +243,26 @@ class SimpleConv(nn.Module):
                 z = torch.view_as_real(z).permute(0, 1, 2, 4, 3)
             z = z.reshape(B, -1, T)
             inputs["meg"] = z
+            print('stft: ' + str(inputs['meg'].shape))
 
         if self.subject_embedding is not None:
             emb = self.subject_embedding(subjects)[:, :, None]
             inputs["meg"] = torch.cat([inputs["meg"], emb.expand(-1, -1, length)], dim=1)
+            print('subject embedding: ' + str(inputs['meg'].shape))
 
         if self._concatenate:
             input_list = [x[1] for x in sorted(inputs.items())]
             inputs = {"concat": torch.cat(input_list, dim=1)}
+            print('concatenated inputs: ' + str(inputs['concat'].shape))
 
-        encoded = {}
-        for name, x in inputs.items():
-            encoded[name] = self.encoders[name](x)
+        # encoded = {}
+        # for name, x in inputs.items():
+        #     encoded[name] = self.encoders[name](x)
 
-        inputs = [x[1] for x in sorted(encoded.items())]
-        x = torch.cat(inputs, dim=1)
+        # inputs = [x[1] for x in sorted(encoded.items())]
+        # x = torch.cat(inputs, dim=1)
+        print(inputs.shape)
+        x = inputs
         if self.dual_path is not None:
             x = self.dual_path(x)
         if self.final is not None:

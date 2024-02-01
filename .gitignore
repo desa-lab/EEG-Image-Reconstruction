@@ -2,3 +2,7 @@ cache/
 misc/
 __pycache__/
 diffusion/
+vdvae/
+versatile_diffusion/
+data/
+results/

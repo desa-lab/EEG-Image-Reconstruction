@@ -54,8 +54,18 @@ class SubjectLayers(nn.Module):
 
     def forward(self, x, subjects):
         _, C, D = self.weights.shape
+        print('weights1:', self.weights.shape)
         weights = self.weights.gather(0, subjects.view(-1, 1, 1).expand(-1, C, D))
+        print('weights2:', weights.shape) # weights: torch.Size([256, 270, 270])
+        print('x:', x.shape) # x: torch.Size([1, 270, 120])
+        # x = torch.randn(1, 270, 120)
+        # weights = torch.randn(1, 270, 270)
+        # x.to('cpu')
+        # weights.to('cpu')
         return torch.einsum("bct,bcd->bdt", x, weights)
+        # return torch.einsum("bct,bcd->bdt", x, torch.randn(1, 270, 270).to('cuda:0'))
+        # return torch.einsum("bct,bcd->bdt", torch.randn(1, 270, 120).to('cuda:0'), weights)
+        # return torch.einsum("bct,bcd->bdt", torch.randn(1, 270, 120).to('cuda:0'), torch.randn(1, 270, 270).to('cuda:0'))
 
     def __repr__(self):
         S, C, D = self.weights.shape
