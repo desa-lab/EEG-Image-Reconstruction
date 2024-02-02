@@ -9,6 +9,7 @@ All the models used, ConvRNN is taken from https://arxiv.org/abs/2103.02339,
 and SimpleConv is the one used in the NMI paper, https://arxiv.org/abs/2208.12266.
 """
 
-from .convrnn import ConvRNN
+from .brain_module import BrainModule
+# from .convrnn import ConvRNN
 from .simpleconv import SimpleConv
-from .features import DeepMel
+# from .features import DeepMel
