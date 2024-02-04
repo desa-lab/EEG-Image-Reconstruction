@@ -40,8 +40,10 @@ print(np.max(test_fmri),np.min(test_fmri))
 num_voxels, num_train, num_test = train_fmri.shape[1], len(train_fmri), len(test_fmri)
 
 
-train_clip = np.load('cache/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
-test_clip = np.load('cache/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
+# train_clip = np.load('cache/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
+# test_clip = np.load('cache/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
+train_clip = np.load('cache/extracted_embeddings/BIGMEG1/train_clipvision_sub-BIGMEG1.npy', mmap_mode='r')
+test_clip = np.load('cache/extracted_embeddings/BIGMEG1/test_clipvision_sub-BIGMEG1.npy', mmap_mode='r')
 # train_clip = train_clip[:8000,:,:]
 # test_clip = test_clip[:1000,:,:]
 
@@ -52,42 +54,39 @@ print("Training Regression")
 reg_w = np.zeros((num_embed,num_dim,num_voxels)).astype(np.float32)
 reg_b = np.zeros((num_embed,num_dim)).astype(np.float32)
 pred_clip = np.zeros_like(test_clip)
-for i in range(num_embed):
-
-
-    reg = skl.Ridge(alpha=60000, max_iter=50000, fit_intercept=True) # old alpha=60000, optimal alpha=300000
-    reg.fit(train_fmri, train_clip[:,i])
-    reg_w[i] = reg.coef_
-    reg_b[i] = reg.intercept_
+for alpha in [200000, 300000, 400000, 1000000, 2000000]:
+    reg = skl.Ridge(alpha=alpha, max_iter=50000, fit_intercept=True)
+    reg.fit(train_fmri, train_clip[:,0])
+    reg_w[0] = reg.coef_
+    reg_b[0] = reg.intercept_
     
     pred_test_latent = reg.predict(test_fmri)
     std_norm_test_latent = (pred_test_latent - np.mean(pred_test_latent,axis=0)) / np.std(pred_test_latent,axis=0)
-    pred_clip[:,i] = std_norm_test_latent * np.std(train_clip[:,i],axis=0) + np.mean(train_clip[:,i],axis=0)
-    
-    print(i,reg.score(test_fmri,test_clip[:,i]))
+    pred_clip[:,0] = std_norm_test_latent * np.std(train_clip[:,0],axis=0) + np.mean(train_clip[:,0],axis=0)
+    print(alpha,reg.score(test_fmri,test_clip[:,0]))
     
 
 # np.save('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub),pred_clip)
     # np.save('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub),pred_clip)
-subject = 'BIGMEG1'
-save_dir = 'cache/predicted_embeddings/' + subject + '/'
-if not os.path.exists(save_dir):
-    os.makedirs(save_dir)
-np.save(save_dir + f'thingsmeg_regress_clipvision1b_sub-{subject}.npy', pred_clip)
+# subject = 'BIGMEG1'
+# save_dir = 'cache/predicted_embeddings/' + subject + '/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + f'thingsmeg_regress_clipvision1b_sub-{subject}.npy', pred_clip)
 
 
-datadict = {
-    'weight' : reg_w,
-    'bias' : reg_b,
+# datadict = {
+#     'weight' : reg_w,
+#     'bias' : reg_b,
 
-}
+# }
 
 # with open('data/regression_weights/subj{:02d}/clipvision_regression_weights.pkl'.format(sub),"wb") as f:
 # with open('data/regression_weights/subj{:02d}/clipvision_regression_weights_assumehrf.pkl'.format(sub),"wb") as f:
 #   pickle.dump(datadict,f)
-subject = 'BIGMEG1'
-save_dir = 'cache/regression_weights/' + subject + '/'
-if not os.path.exists(save_dir):
-    os.makedirs(save_dir)
-with open(save_dir + f'thingsmeg_regress_clipvision1b_weights_sub-{subject}.pkl', "wb") as f:
-    pickle.dump(datadict,f)
+# subject = 'BIGMEG1'
+# save_dir = 'cache/regression_weights/' + subject + '/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + f'thingsmeg_regress_clipvision1b_weights_sub-{subject}.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
