@@ -30,7 +30,7 @@ from torch import nn
 #         return x
     
 class BrainModule(nn.Module):
-    def __init__(self, input_channels=272, output_size=768):
+    def __init__(self, input_channels=272, output_size=768): # output_size=91168 for vdvae
         super().__init__()
         self.spatial_attention = nn.Conv1d(input_channels, 270, kernel_size=3, stride=1, padding=1)
         self.linear_proj1 = nn.Conv1d(270, 270, kernel_size=3, stride=1, padding=1)

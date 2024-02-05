@@ -80,7 +80,8 @@ pred_text = torch.tensor(pred_text).half().cuda(1)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub))
-pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_clipvision_sub-BIGMEG1.npy')
+# pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_clipvision1b_sub-BIGMEG1.npy')
+pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_dummyregress_clipvision1b_sub-BIGMEG1.npy')
 pred_vision = torch.tensor(pred_vision).half().cuda(1)
 
 
@@ -169,8 +170,11 @@ for im_id in range(len(pred_vision)):
 
     # x[0].save('results/versatile_diffusion/subj{:02d}/{}.png'.format(sub,im_id))
     # x[0].save('results/versatile_diffusion/subj{:02d}_assumehrf/{}.png'.format(sub,im_id))
-    if not osp.exists('results/versatile_diffusion1b_dummymodule/{}/'.format(sub)):
-        os.makedirs('results/versatile_diffusion1b_dummymodule/{}/'.format(sub))
-    x[0].save('results/versatile_diffusion1b_dummymodule/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/versatile_diffusion1b_dummymodule/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1b_dummymodule/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1b_dummymodule/{}/{}.png'.format(sub,im_id))
+    if not osp.exists('results/versatile_diffusion1b_dummyregress/{}/'.format(sub)):
+        os.makedirs('results/versatile_diffusion1b_dummyregress/{}/'.format(sub))
+    x[0].save('results/versatile_diffusion1b_dummyregress/{}/{}.png'.format(sub,im_id))
       
 
