@@ -4,6 +4,7 @@ import numpy as np
 import sklearn.linear_model as skl
 import pickle
 import argparse
+from scipy.spatial.distance import correlation
 parser = argparse.ArgumentParser(description='Argument Parser')
 parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 args = parser.parse_args()
@@ -52,16 +53,23 @@ print("Training Regression")
 reg_w = np.zeros((num_embed,num_dim,num_voxels)).astype(np.float32)
 reg_b = np.zeros((num_embed,num_dim)).astype(np.float32)
 pred_clip = np.zeros_like(test_clip)
-for alpha in [1200000, 1220000, 1250000]:
-    reg = skl.Ridge(alpha=alpha, max_iter=50000, fit_intercept=True)
-    reg.fit(train_fmri, train_clip[:,0])
-    reg_w[0] = reg.coef_
-    reg_b[0] = reg.intercept_
-    
-    pred_test_latent = reg.predict(test_fmri)
-    std_norm_test_latent = (pred_test_latent - np.mean(pred_test_latent,axis=0)) / np.std(pred_test_latent,axis=0)
-    pred_clip[:,0] = std_norm_test_latent * np.std(train_clip[:,0],axis=0) + np.mean(train_clip[:,0],axis=0)
-    print(alpha,reg.score(test_fmri,test_clip[:,0]))
+for alpha in [200000, 720000, 1250000]:
+    for i in range(5):
+        reg = skl.Ridge(alpha=alpha, max_iter=50000, fit_intercept=True)
+        reg.fit(train_fmri, train_clip[:,i])
+        reg_w[i] = reg.coef_
+        reg_b[i] = reg.intercept_
+        
+        pred_test_latent = reg.predict(test_fmri)
+        std_norm_test_latent = (pred_test_latent - np.mean(pred_test_latent,axis=0)) / np.std(pred_test_latent,axis=0)
+        pred_clip[:,i] = std_norm_test_latent * np.std(train_clip[:,i],axis=0) + np.mean(train_clip[:,i],axis=0)
+        # Compute the Euclidean distances
+        euclidean_distances = np.array([np.linalg.norm(u - v) for u, v in zip(pred_clip[:,i], test_clip[:,i])])
+        correlation_distances = np.array([correlation(u, v) for u, v in zip(pred_clip[:,i], test_clip[:,i])])
+        # Compute the average Euclidean distance
+        average_euclidean_distance = euclidean_distances.mean()
+        correlations = (1 - correlation_distances).mean()
+        print(alpha, i, reg.score(test_fmri,test_clip[:,i]), average_euclidean_distance, correlations)
 # 15 0.14176179041169176
 # 16 0.14576387719203548
 # 17 0.14871457869596197

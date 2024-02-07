@@ -80,7 +80,7 @@ pred_text = torch.tensor(pred_text).half().cuda(1)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub))
-pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_clipvision_sub-BIGMEG1.npy')
+pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_clipvision1b_sub-BIGMEG1.npy')
 pred_vision = torch.tensor(pred_vision).half().cuda(1)
 
 
