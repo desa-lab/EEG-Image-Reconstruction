@@ -32,7 +32,8 @@ import os
 # %%
 data_array = np.load('cache/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1.npy', mmap_mode='r')
 # labels_array = np.load('cache/extracted_embeddings/BIGMEG1/train_cliptext1b_sub-BIGMEG1.npy', mmap_mode='r')
-labels_array = np.load('cache/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
+labels_array = np.load('cache/extracted_embeddings/BIGMEG1/train_cliptext1bcategory_sub-BIGMEG1.npy', mmap_mode='r')
+# labels_array = np.load('cache/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1.npy', mmap_mode='r')
 # labels_array = labels_array[:, 6]
 print(data_array.shape, labels_array.shape)
 
@@ -57,12 +58,13 @@ models = []
 # %%
 subject = 'BIGMEG1'
 # save_dir = 'cache/cliptext1b_module_weights/' + subject + '/'
-save_dir = 'cache/clipvision1b_module_weights/' + subject + '/'
+save_dir = 'cache/cliptext1bcategory_module_weights/' + subject + '/'
+# save_dir = 'cache/clipvision1b_module_weights/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
-# for i_token in range(77): # cliptext
-for i_token in range(257): # clipvision
+for i_token in range(77): # cliptext
+# for i_token in range(257): # clipvision
     device = torch.device('cuda:7')
     model = BrainModule()
     criterion = nn.MSELoss()

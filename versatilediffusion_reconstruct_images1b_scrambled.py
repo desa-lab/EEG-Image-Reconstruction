@@ -26,7 +26,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Argument Parser')
 parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 parser.add_argument("-diff_str", "--diff_str",help="Diffusion Strength",default=0.75)
-parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4)
+parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.9) # original 0.4
 args = parser.parse_args()
 sub=int(args.sub)
 assert sub in [1,2,5,7]
@@ -75,7 +75,9 @@ batch_size = 1
 
 # pred_text = np.load('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral.npy'.format(sub))
 # pred_text = np.load('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral_assumehrf.npy'.format(sub))
-pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1b_scrambled_sub-BIGMEG1.npy')
+# pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1b_scrambled_sub-BIGMEG1.npy')
+# pred_text = np.load('cache/extracted_embeddings/BIGMEG1/test_cliptext1b_scrambled_sub-BIGMEG1.npy')
+pred_text = np.load('cache/extracted_embeddings/BIGMEG1/test_cliptext1b_sub-BIGMEG1.npy')
 pred_text = torch.tensor(pred_text).half().cuda(1)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
@@ -169,8 +171,15 @@ for im_id in range(len(pred_vision)):
 
     # x[0].save('results/versatile_diffusion/subj{:02d}/{}.png'.format(sub,im_id))
     # x[0].save('results/versatile_diffusion/subj{:02d}_assumehrf/{}.png'.format(sub,im_id))
-    if not osp.exists('results/versatile_diffusion1b_scrambled/{}/'.format(sub)):
-        os.makedirs('results/versatile_diffusion1b_scrambled/{}/'.format(sub))
-    x[0].save('results/versatile_diffusion1b_scrambled/{}/{}.png'.format(sub,im_id))
+        
+    # if not osp.exists('results/versatile_diffusion1b_scrambled/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1b_scrambled/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1b_scrambled/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/versatile_diffusion1b_scrambled_test/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1b_scrambled_test/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1b_scrambled_test/{}/{}.png'.format(sub,im_id))
+    if not osp.exists('results/versatile_diffusion1b_unscrambled_test/{}/'.format(sub)):
+        os.makedirs('results/versatile_diffusion1b_unscrambled_test/{}/'.format(sub))
+    x[0].save('results/versatile_diffusion1b_unscrambled_test/{}/{}.png'.format(sub,im_id))
       
 
