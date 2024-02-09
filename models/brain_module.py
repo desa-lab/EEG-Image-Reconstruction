@@ -1,6 +1,27 @@
 import torch
 from torch import nn
 
+class SpatialAttentionLayer(nn.Module):
+    """
+    Spatial attention layer, as defined by Woo et al. in CBAM: Convolutional Block Attention Module
+    1. apply avg pooling and max pooling along channel axis
+    2. concatenate these
+    3. apply convolutional layer which "generates a spatial attention map"
+    """
+
+    def __init__(self, conv_dim: int = 272, out_dim: int = 270, kernel_size: int = 3):
+        super().__init__()
+        self.AvgPoolLayer = nn.AvgPool1d(kernel_size)
+        self.MaxPoolLayer = nn.MaxPool1d(kernel_size)
+        self.ConvLayer = nn.Conv1d(2*conv_dim,out_dim,kernel_size)
+
+    def forward(self,x):
+        x1 = self.AvgPoolLayer(x) # apply avg pooling to input x
+        x2 = self.MaxPoolLayer(x) # apply max pooling to input x
+        x = torch.cat((x1,x2),axis=1) # concatenate channel-wise
+        out = self.ConvLayer(x) # apply convolutional layer
+        return out
+
 class BrainModule(nn.Module):
     def __init__(self, input_channels=272, output_size=768): # output_size=91168 for vdvae
         super().__init__()
@@ -19,7 +40,8 @@ class BrainModule(nn.Module):
         padding5 = (kernel_size - 1) * dilation5 // 2
         padding6 = (kernel_size - 1) * dilation6 // 2
 
-        self.spatial_attention = nn.Conv1d(input_channels, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
+        #self.spatial_attention = nn.Conv1d(input_channels, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
+        self.spatial_attention = SpatialAttentionLayer(conv_dim=input_channels,out_dim=270,kernel_size=kernel_size)
         self.linear_proj1 = nn.Conv1d(270, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
         self.linear_proj2 = nn.Conv1d(270, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
         # self.res_dilated_conv1 = nn.Conv1d(270, 320, kernel_size=3, stride=1, padding=1)
