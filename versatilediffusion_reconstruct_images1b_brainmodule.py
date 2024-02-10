@@ -179,8 +179,12 @@ for im_id in range(len(pred_vision)):
     #     os.makedirs('results/versatile_diffusion1b_brainmodule_overmix/{}/'.format(sub))
     # x[0].save('results/versatile_diffusion1b_brainmodule_overmix/{}/{}.png'.format(sub,im_id))
 
-    if not osp.exists('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/'.format(sub)):
-        os.makedirs('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/'.format(sub))
-    x[0].save('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1bcategory_brainmodule_overmix/{}/{}.png'.format(sub,im_id))
+        
+    if not osp.exists('results/versatile_diffusion1bcategory_brainmodule/{}/'.format(sub)):
+        os.makedirs('results/versatile_diffusion1bcategory_brainmodule/{}/'.format(sub))
+    x[0].save('results/versatile_diffusion1bcategory_brainmodule/{}/{}.png'.format(sub,im_id))
       
 

@@ -4,6 +4,7 @@ import numpy as np
 import sklearn.linear_model as skl
 import pickle
 import argparse
+from scipy.spatial.distance import correlation
 parser = argparse.ArgumentParser(description='Argument Parser')
 parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 args = parser.parse_args()
@@ -63,8 +64,15 @@ for i in range(num_embed):
     pred_test_latent = reg.predict(test_fmri)
     std_norm_test_latent = (pred_test_latent - np.mean(pred_test_latent,axis=0)) / np.std(pred_test_latent,axis=0)
     pred_clip[:,i] = std_norm_test_latent * np.std(train_clip[:,i],axis=0) + np.mean(train_clip[:,i],axis=0)
+
+    # Compute the Euclidean distances
+    euclidean_distances = np.array([np.linalg.norm(u - v) for u, v in zip(pred_clip[:,i], test_clip[:,i])])
+    correlation_distances = np.array([correlation(u, v) for u, v in zip(pred_clip[:,i], test_clip[:,i])])
+    # Compute the average Euclidean distance
+    average_euclidean_distance = euclidean_distances.mean()
+    correlations = (1 - correlation_distances).mean()
     
-    print(i,reg.score(test_fmri,test_clip[:,i]))
+    print(i,reg.score(test_fmri,test_clip[:,i]), average_euclidean_distance, correlations)
     
 
 # np.save('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub),pred_clip)
