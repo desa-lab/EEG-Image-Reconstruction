@@ -26,7 +26,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Argument Parser')
 parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 parser.add_argument("-diff_str", "--diff_str",help="Diffusion Strength",default=0.75)
-parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4)
+parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4) # original 0.4
 args = parser.parse_args()
 sub=int(args.sub)
 assert sub in [1,2,5,7]
@@ -73,19 +73,16 @@ sampler = sampler(net)
 #sampler.model.cuda(1)
 batch_size = 1
 
-top_n = 50
 # pred_text = np.load('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral.npy'.format(sub))
 # pred_text = np.load('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral_assumehrf.npy'.format(sub))
 # pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1b_sub-BIGMEG1.npy')
-# pred_text = np.load('cache/extracted_embeddings/BIGMEG1/test_cliptext1b_sub-BIGMEG1.npy')
-pred_text = np.load(f'cache/extracted_embeddings/BIGMEG1/test_cliptext1bcategory_sparse{top_n}_sub-BIGMEG1.npy')
+# pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1bcategory_sub-BIGMEG1.npy')
+pred_text = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1.npy')
 pred_text = torch.tensor(pred_text).half().cuda(1)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub))
-# pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_clipvision_sub-BIGMEG1.npy')
-# pred_vision = np.load('cache/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1.npy')
-pred_vision = np.load(f'cache/extracted_embeddings/BIGMEG1/test_clipvision1b_sparse{top_n}_sub-BIGMEG1.npy')
+pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_precomputed.npy')
 pred_vision = torch.tensor(pred_vision).half().cuda(1)
 
 
@@ -102,7 +99,7 @@ for im_id in range(len(pred_vision)):
 
     # zim = Image.open('results/vdvae/subj{:02d}/{}.png'.format(sub,im_id))
     sub = 'BIGMEG1'
-    zim = Image.open('results/vdvae1b/{}/{}.png'.format(sub,im_id))
+    zim = Image.open('results/avg_vdvae1b/{}/{}.png'.format(sub,im_id))
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
@@ -174,8 +171,15 @@ for im_id in range(len(pred_vision)):
 
     # x[0].save('results/versatile_diffusion/subj{:02d}/{}.png'.format(sub,im_id))
     # x[0].save('results/versatile_diffusion/subj{:02d}_assumehrf/{}.png'.format(sub,im_id))
-    if not osp.exists('results/versatile_diffusion1b_refclip_sparse{}/{}/'.format(top_n,sub)):
-        os.makedirs('results/versatile_diffusion1b_refclip_sparse{}/{}/'.format(top_n,sub))
-    x[0].save('results/versatile_diffusion1b_refclip_sparse{}/{}/{}.png'.format(top_n,sub,im_id))
+        
+    # if not osp.exists('results/versatile_diffusion1b/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1b/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1b/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/versatile_diffusion1b_overmix/{}/'.format(sub)):
+    #     os.makedirs('results/versatile_diffusion1b_overmix/{}/'.format(sub))
+    # x[0].save('results/versatile_diffusion1b_overmix/{}/{}.png'.format(sub,im_id))
       
+    if not osp.exists('results/avg_versatile_diffusion1balltokens/{}/'.format(sub)):
+        os.makedirs('results/avg_versatile_diffusion1balltokens/{}/'.format(sub))
+    x[0].save('results/avg_versatile_diffusion1balltokens/{}/{}.png'.format(sub,im_id))
 

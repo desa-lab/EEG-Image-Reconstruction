@@ -57,7 +57,7 @@ class batch_generator_external_images(Dataset):
 
     def __init__(self, data_path):
         self.data_path = data_path
-        self.im = np.load(data_path).astype(np.uint8)
+        self.im = np.load(data_path).astype(np.uint8)[:200] # only the first 200 images for avg
 
 
     def __getitem__(self,idx):
@@ -114,6 +114,7 @@ def latent_transformation(latents, ref):
   return transformed_latents
 
 idx = range(len(test_images))
+import pdb;pdb.set_trace()
 input_latent = latent_transformation(pred_latents[idx],ref_latent)
 
   
