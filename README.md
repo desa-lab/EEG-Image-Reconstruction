@@ -5,7 +5,12 @@ This section covers the visual reconstruction using the THINGS-MEG dataset
 1. Follow instructions from brainmagick and brain-diffusor to create the python environments for both
 
 <!-- 2. TODO: data downloading instructions -->
-2. 
+2. Download the THINGS-Images, then save the images and categories as numpy files:
+```
+source diffusion/bin/activate
+python save_things_images.py
+python save_things_categories.py
+```
 
 3. Preprocess the MEG data and prepare the stimuli:
 ```
@@ -23,7 +28,7 @@ python generate_captions1b.py
 ## Create the training embeddings from the stimulus
 <!-- Run `get_precomputed_clipvision.py`, `get_precomputed_clipvision.py`, and `get_precomputed_autokl.py` -->
 ```
-source diffusor/bin/activate
+source diffusion/bin/activate
 python vdvae_extract_features1b.py
 python cliptext_extract_features.py
 python clipvision_extract_features.py
@@ -39,7 +44,7 @@ wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-asse
 ```
 2. Extract VDVAE latent features of stimuli images, train regression models from MEG to VDVAE latent features and save test predictions for individual test trials as well as averaged test trials:
 ```
-source diffusor/bin/activate
+source diffusion/bin/activate
 python vdvae_regression1b.py
 python vdvae_reconstruct_images1b.py
 ```
