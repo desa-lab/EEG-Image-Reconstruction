@@ -76,7 +76,7 @@ pred_test_latent = reg.predict(test_fmri)
 std_norm_test_latent = (pred_test_latent - np.mean(pred_test_latent,axis=0)) / np.std(pred_test_latent,axis=0)
 pred_latents = std_norm_test_latent * np.std(train_latents,axis=0) + np.mean(train_latents,axis=0)
 print(reg.score(test_fmri,test_latents))
-# -0.0054560161881921105
+# -0.00520250264941022
 
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
