@@ -13,3 +13,4 @@ from .brain_module import BrainModule
 # from .convrnn import ConvRNN
 from .simpleconv import SimpleConv
 # from .features import DeepMel
+from .meg_net import MEGNet
