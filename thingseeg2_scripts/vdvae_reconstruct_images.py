@@ -97,7 +97,8 @@ test_latents = np.concatenate(test_latents)
 
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
-pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl.npy')
+# pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl.npy')
+pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_null.npy')
 ref_latent = stats
 
 # Transfor latents from flattened representation to hierarchical
@@ -138,9 +139,15 @@ for i in range(int(np.ceil(len(test_images)/batch_size))):
       im = im.resize((512,512),resample=3)
       # im.save('results/vdvae/subj{:02d}/{}.png'.format(sub,i*batch_size+j))
       # subject = 'BIGMEG1'
-      save_dir = 'results/thingseeg2_preproc/vdvae/' 
+
+      # save_dir = 'results/thingseeg2_preproc/vdvae/' 
+      # if not os.path.exists(save_dir):
+      #     os.makedirs(save_dir)
+      # im.save('results/thingseeg2_preproc/vdvae/{}.png'.format(i*batch_size+j))
+
+      save_dir = 'results/thingseeg2_preproc/vdvae_null/' 
       if not os.path.exists(save_dir):
           os.makedirs(save_dir)
-      im.save('results/thingseeg2_preproc/vdvae/{}.png'.format(i*batch_size+j))
+      im.save('results/thingseeg2_preproc/vdvae_null/{}.png'.format(i*batch_size+j))
       
 
