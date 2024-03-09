@@ -38,8 +38,20 @@ assert sub in [0,1,2,5,7]
 # images_dir = 'data/things-eeg2_preproc/test_images_direct'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/test_images'
 
-images_dir = 'results/thingseeg2_preproc/versatile_diffusion'
-feats_dir = 'cache/things-eeg2_preproc/eval_features/subj1_preproc'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion'
+# feats_dir = 'cache/things-eeg2_preproc/eval_features/subj1_preproc'
+
+# images_dir = 'results/thingseeg2/versatile_diffusion_avg1_200ms'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_200ms'
+
+# images_dir = 'results/thingseeg2/versatile_diffusion_avg1_400ms'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_400ms'
+
+# images_dir = 'results/thingseeg2/versatile_diffusion_avg1_600ms'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_600ms'
+
+images_dir = 'results/thingseeg2/versatile_diffusion_avg1_800ms'
+feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_800ms'
 
 
 if not os.path.exists(feats_dir):

@@ -51,9 +51,14 @@ net_list = [
 # test_dir = 'data/eval_features/test_images'
 # num_test = 982
 
-feats_dir = 'cache/things-eeg2_preproc/eval_features/subj1_preproc'
-test_dir = 'cache/thingseeg2_preproc/eval_features/test_images'
 num_test = 200
+test_dir = 'cache/thingseeg2_preproc/eval_features/test_images'
+# feats_dir = 'cache/things-eeg2_preproc/eval_features/subj1_preproc'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_200ms'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_400ms'
+# feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_600ms'
+feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_800ms'
+
 
 distance_fn = sp.spatial.distance.correlation
 pairwise_corrs = []
@@ -92,8 +97,12 @@ pixcorr_list = []
 #     ssim_list.append(ssim_res)
 
 for i in range(200):
-    gen_image = Image.open('results/thingseeg2_preproc/versatile_diffusion/{}.png'.format(i))
     gt_image = Image.open('data/things-eeg2_preproc/test_images_direct/{}.png'.format(i)).resize((512,512)) # either both 512 or both 500
+    # gen_image = Image.open('results/thingseeg2_preproc/versatile_diffusion/{}.png'.format(i))
+    # gen_image = Image.open('results/thingseeg2/versatile_diffusion_avg1_200ms/{}.png'.format(i))
+    # gen_image = Image.open('results/thingseeg2/versatile_diffusion_avg1_400ms/{}.png'.format(i))
+    # gen_image = Image.open('results/thingseeg2/versatile_diffusion_avg1_600ms/{}.png'.format(i))
+    gen_image = Image.open('results/thingseeg2/versatile_diffusion_avg1_800ms/{}.png'.format(i))
     gen_image = np.array(gen_image)/255.0
     gt_image = np.array(gt_image)/255.0
     pixcorr_res = np.corrcoef(gt_image.reshape(1,-1), gen_image.reshape(1,-1))[0,1]

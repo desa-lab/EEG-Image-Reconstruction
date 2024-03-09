@@ -25,12 +25,28 @@ test_latents = np.load('cache/thingseeg2_preproc/extracted_embeddings/test_autok
 # test_path = 'data/processed_data/subj{:02d}/nsd_test_fmriavg_brainmask_sub{}.npy'.format(sub,sub)
 # test_fmri = np.load(test_path)
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg.npy'
-train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_200ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_400ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_600ms.npy'
+train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_800ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_200ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_400ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_600ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_800ms.npy'
 train_meg = np.load(train_path, mmap_mode='r')
 # train_meg = train_meg[:8000,:,:]
 train_meg = train_meg.reshape(train_meg.shape[0], -1)
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg.npy'
-test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_200ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_400ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_600ms.npy'
+test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_800ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_200ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_400ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_600ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_800ms.npy'
 test_meg = np.load(test_path, mmap_mode='r')
 # test_meg = test_meg[:1000,:,:]
 test_meg = test_meg.reshape(test_meg.shape[0], -1)
@@ -80,6 +96,8 @@ pred_latents = std_norm_test_latent * np.std(train_latents,axis=0) + np.mean(tra
 print(reg.score(test_fmri,test_latents))
 # -0.00520250264941022
 # -0.005210581349707694 null
+# -0.005233597313805604 avg1_200ms
+# -0.0053340178161875385 avg1_400ms
 
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
@@ -95,10 +113,52 @@ print(reg.score(test_fmri,test_latents))
 #     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_autokl.npy', pred_latents)
 
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_200ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_400ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_600ms.npy', pred_latents)
+
 save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + 'thingseeg2_regress_autokl_null.npy', pred_latents)
+np.save(save_dir + 'thingseeg2_regress_autokl_800ms.npy', pred_latents)
+
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_null.npy', pred_latents)
+
+
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_avg1_200ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_avg1_400ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_avg1_600ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_avg1_800ms.npy', pred_latents)
 
 
 del train_fmri
@@ -125,7 +185,49 @@ datadict = {
 #     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_autokl_weights.npy', pred_latents)
 
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_200ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_400ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_600ms.npy', pred_latents)
+
 save_dir = 'cache/thingseeg2_preproc/regression_weights/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + 'thingseeg2_regress_autokl_weights_null.npy', pred_latents)
+np.save(save_dir + 'thingseeg2_regress_autokl_weights_800ms.npy', pred_latents)
+
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_null.npy', pred_latents)
+
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_avg1_200ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_avg1_400ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_avg1_600ms.npy', pred_latents)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_autokl_weights_avg1_800ms.npy', pred_latents)

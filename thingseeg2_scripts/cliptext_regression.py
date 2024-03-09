@@ -12,12 +12,28 @@ sub=int(args.sub)
 assert sub in [1,2,5,7]
 
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg.npy'
-train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_200ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_400ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_600ms.npy'
+train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_800ms.npy'
+# train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_200ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_400ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_600ms.npy'
+# train_path = 'data/thingseeg2/train_thingseeg2_avg1_800ms.npy'
 train_meg = np.load(train_path, mmap_mode='r')
 # train_meg = train_meg[:8000,:,:]
 train_meg = train_meg.reshape(train_meg.shape[0], -1)
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg.npy'
-test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_200ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_400ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_600ms.npy'
+test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_800ms.npy'
+# test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_200ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_400ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_600ms.npy'
+# test_path = 'data/thingseeg2/test_thingseeg2_avg1_800ms.npy'
 test_meg = np.load(test_path, mmap_mode='r')
 # test_meg = test_meg[:1000,:,:]
 test_meg = test_meg.reshape(test_meg.shape[0], -1)
@@ -85,11 +101,52 @@ for i in range(num_embed):
 # if not os.path.exists(save_dir):
 #     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_cliptext.npy', pred_clip)
+    
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_200ms.npy', pred_clip)
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_400ms.npy', pred_clip)
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_600ms.npy', pred_clip)
 
 save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + 'thingseeg2_regress_cliptext_null.npy', pred_clip)
+np.save(save_dir + 'thingseeg2_regress_cliptext_800ms.npy', pred_clip)
+
+
+# save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_null.npy', pred_clip)
+    
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_avg1_200ms.npy', pred_clip)
+    
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_avg1_400ms.npy', pred_clip)
+    
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_avg1_600ms.npy', pred_clip)
+    
+# save_dir = 'cache/thingseeg2/predicted_embeddings/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + 'thingseeg2_regress_cliptext_avg1_800ms.npy', pred_clip)
 
 datadict = {
     'weight' : reg_w,
@@ -109,9 +166,57 @@ datadict = {
 # with open(save_dir + 'thingseeg2_regress_cliptext_weights.pkl', "wb") as f:
 #     pickle.dump(datadict,f)
 
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_200ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_400ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_600ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
 save_dir = 'cache/thingseeg2_preproc/regression_weights/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-with open(save_dir + 'thingseeg2_regress_cliptext_weights_null.pkl', "wb") as f:
+with open(save_dir + 'thingseeg2_regress_cliptext_weights_800ms.pkl', "wb") as f:
     pickle.dump(datadict,f)
 
+
+# save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_null.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_avg1_200ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_avg1_400ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_avg1_600ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
+# save_dir = 'cache/thingseeg2/regression_weights/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + 'thingseeg2_regress_cliptext_weights_avg1_800ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
