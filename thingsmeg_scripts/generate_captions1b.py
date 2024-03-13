@@ -45,24 +45,24 @@ vis_processors.keys()
 # ## train set
 
 # %%
-images = np.load('cache/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy', mmap_mode='r')
+images = np.load('cache/thingsmeg/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy', mmap_mode='r')
 captions = []
 for i in tqdm(range(len(images)), total=len(images), desc="test captions"):
     image_pil = Image.fromarray(images[i].astype(np.uint8))
     image = vis_processors["eval"](image_pil).unsqueeze(0).to(device)
     captions.append(model.generate({"image": image})[0])
-np.save('cache/processed_data/BIGMEG1/test_captions1b_sub-BIGMEG1.npy', captions)
+np.save('cache/thingsmeg/processed_data/BIGMEG1/test_captions1b_sub-BIGMEG1.npy', captions)
 
 # %% [markdown]
 # ## test set
 
 # %%
-images = np.load('cache/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy', mmap_mode='r')
+images = np.load('cache/thingsmeg/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy', mmap_mode='r')
 captions = []
 for i in tqdm(range(len(images)), total=len(images), desc="train captions"):
     image_pil = Image.fromarray(images[i].astype(np.uint8))
     image = vis_processors["eval"](image_pil).unsqueeze(0).to(device)
     captions.append(model.generate({"image": image})[0])
-np.save('cache/processed_data/BIGMEG1/train_captions1b_sub-BIGMEG1.npy', captions)
+np.save('cache/thingsmeg/processed_data/BIGMEG1/train_captions1b_sub-BIGMEG1.npy', captions)
 
 

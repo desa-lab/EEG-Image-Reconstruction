@@ -74,7 +74,7 @@ class batch_generator_external_images(Dataset):
 
 
 # image_path = 'data/processed_data/subj{:02d}/nsd_test_stim_sub{}.npy'.format(sub,sub)
-image_path = 'cache/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
 test_images = batch_generator_external_images(data_path = image_path)
 testloader = DataLoader(test_images,batch_size,shuffle=False)
 
@@ -98,7 +98,7 @@ test_latents = np.concatenate(test_latents)
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
 # pred_latents = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
-pred_latents = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
+pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
 ref_latent = stats
 
 # Transfor latents from flattened representation to hierarchical

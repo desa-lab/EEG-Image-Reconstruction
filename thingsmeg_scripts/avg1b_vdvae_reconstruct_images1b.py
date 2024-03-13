@@ -74,7 +74,7 @@ class batch_generator_external_images(Dataset):
 
 
 # image_path = 'data/processed_data/subj{:02d}/nsd_test_stim_sub{}.npy'.format(sub,sub)
-image_path = 'cache/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
 test_images = batch_generator_external_images(data_path = image_path)
 testloader = DataLoader(test_images,batch_size,shuffle=False)
 
@@ -98,7 +98,11 @@ test_latents = np.concatenate(test_latents)
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
 # pred_latents = np.load('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub))
 # pred_latents = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
-pred_latents = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
+# pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1.npy')
+# pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1_200ms.npy')
+# pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1_400ms.npy')
+# pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1_600ms.npy')
+pred_latents = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_autokl1b_sub-BIGMEG1_800ms.npy')
 ref_latent = stats
 
 # Transfor latents from flattened representation to hierarchical
@@ -114,7 +118,7 @@ def latent_transformation(latents, ref):
   return transformed_latents
 
 idx = range(len(test_images))
-import pdb;pdb.set_trace()
+# import pdb;pdb.set_trace()
 input_latent = latent_transformation(pred_latents[idx],ref_latent)
 
   
@@ -146,10 +150,29 @@ for i in range(int(np.ceil(len(test_images)/batch_size))):
       #     os.makedirs(save_dir)
       # im.save('results/vdvae1b/{}/{}.png'.format(subject,i*batch_size+j))
       
+      # subject = 'BIGMEG1'
+      # save_dir = 'results/thingsmeg/avg_vdvae1b/' + subject + '/'
+      # if not os.path.exists(save_dir):
+      #     os.makedirs(save_dir)
+      # im.save('results/thingsmeg/avg_vdvae1b/{}/{}.png'.format(subject,i*batch_size+j))
+      # subject = 'BIGMEG1'
+      # save_dir = 'results/thingsmeg/avg_vdvae1b_200ms/' + subject + '/'
+      # if not os.path.exists(save_dir):
+      #     os.makedirs(save_dir)
+      # im.save('results/thingsmeg/avg_vdvae1b_200ms/{}/{}.png'.format(subject,i*batch_size+j))
+      # subject = 'BIGMEG1'
+      # save_dir = 'results/thingsmeg/avg_vdvae1b_400ms/' + subject + '/'
+      # if not os.path.exists(save_dir):
+      #     os.makedirs(save_dir)
+      # im.save('results/thingsmeg/avg_vdvae1b_400ms/{}/{}.png'.format(subject,i*batch_size+j))
+      # subject = 'BIGMEG1'
+      # save_dir = 'results/thingsmeg/avg_vdvae1b_600ms/' + subject + '/'
+      # if not os.path.exists(save_dir):
+      #     os.makedirs(save_dir)
+      # im.save('results/thingsmeg/avg_vdvae1b_600ms/{}/{}.png'.format(subject,i*batch_size+j))
       subject = 'BIGMEG1'
-      save_dir = 'results/avg_vdvae1b/' + subject + '/'
+      save_dir = 'results/thingsmeg/avg_vdvae1b_800ms/' + subject + '/'
       if not os.path.exists(save_dir):
           os.makedirs(save_dir)
-      im.save('results/avg_vdvae1b/{}/{}.png'.format(subject,i*batch_size+j))
-      
+      im.save('results/thingsmeg/avg_vdvae1b_800ms/{}/{}.png'.format(subject,i*batch_size+j))
 

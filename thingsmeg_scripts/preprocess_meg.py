@@ -74,9 +74,17 @@ print(train_meg.shape, test_meg.shape)
 # (22248, 272, 120) (2400, 272, 120)
 
 # %%
-save_dir = 'cache/processed_data/' + subject + '/'
+save_dir = 'cache/thingsmeg/processed_data/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 np.save(save_dir + f'train_thingsmeg_sub-{subject}.npy', train_meg)
+np.save(save_dir + f'train_thingsmeg_sub-{subject}_200ms.npy', train_meg[..., :24])
+np.save(save_dir + f'train_thingsmeg_sub-{subject}_400ms.npy', train_meg[..., :48])
+np.save(save_dir + f'train_thingsmeg_sub-{subject}_600ms.npy', train_meg[..., :72])
+np.save(save_dir + f'train_thingsmeg_sub-{subject}_800ms.npy', train_meg[..., :96])
 np.save(save_dir + f'test_thingsmeg_sub-{subject}.npy', test_meg)
+np.save(save_dir + f'test_thingsmeg_sub-{subject}_200ms.npy', test_meg[..., :24])
+np.save(save_dir + f'test_thingsmeg_sub-{subject}_400ms.npy', test_meg[..., :48])
+np.save(save_dir + f'test_thingsmeg_sub-{subject}_600ms.npy', test_meg[..., :72])
+np.save(save_dir + f'test_thingsmeg_sub-{subject}_800ms.npy', test_meg[..., :96])
 

@@ -11,11 +11,19 @@ args = parser.parse_args()
 sub=int(args.sub)
 assert sub in [1,2,5,7]
 
-train_path = 'cache/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_200ms.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_400ms.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_600ms.npy'
+train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_800ms.npy'
 train_meg = np.load(train_path, mmap_mode='r')
 # train_meg = train_meg[:8000,:,:]
 train_meg = train_meg.reshape(train_meg.shape[0], -1)
-test_path = 'cache/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_200ms.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_400ms.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_600ms.npy'
+test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_800ms.npy'
 test_meg = np.load(test_path, mmap_mode='r')
 # test_meg = test_meg[:1000,:,:]
 test_meg = test_meg.reshape(test_meg.shape[0], -1)
@@ -41,8 +49,8 @@ print(np.max(test_fmri),np.min(test_fmri))
 num_voxels, num_train, num_test = train_fmri.shape[1], len(train_fmri), len(test_fmri)
 
 
-train_clip = np.load('cache/extracted_embeddings/BIGMEG1/train_cliptext1bcategory_sub-BIGMEG1.npy', mmap_mode='r')
-test_clip = np.load('cache/extracted_embeddings/BIGMEG1/test_cliptext1bcategory_sub-BIGMEG1.npy', mmap_mode='r')
+train_clip = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/train_cliptext1bcategory_sub-BIGMEG1.npy', mmap_mode='r')
+test_clip = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_cliptext1bcategory_sub-BIGMEG1.npy', mmap_mode='r')
 # train_clip = train_clip[:8000,:,:]
 # test_clip = test_clip[:1000,:,:]
 
@@ -78,10 +86,14 @@ for i in range(num_embed):
 # np.save('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral.npy'.format(sub),pred_clip)
 # np.save('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral_assumehrf.npy'.format(sub),pred_clip)
 subject = 'BIGMEG1'
-save_dir = 'cache/predicted_embeddings/' + subject + '/'
+save_dir = 'cache/thingsmeg/predicted_embeddings/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}.npy', pred_clip)
+# np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}.npy', pred_clip)
+# np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}_200ms.npy', pred_clip)
+# np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}_400ms.npy', pred_clip)
+# np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}_600ms.npy', pred_clip)
+np.save(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_sub-{subject}_800ms.npy', pred_clip)
 
 datadict = {
     'weight' : reg_w,
@@ -94,11 +106,20 @@ datadict = {
 # with open('data/regression_weights/subj{:02d}/cliptext_regression_weights_assumehrf.pkl'.format(sub),"wb") as f:
 #   pickle.dump(datadict,f)
 subject = 'BIGMEG1'
-save_dir = 'cache/regression_weights/' + subject + '/'
+save_dir = 'cache/thingsmeg/regression_weights/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}.pkl', "wb") as f:
+# with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+# with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}_200ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+# with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}_400ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+# with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}_600ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+with open(save_dir + f'thingsmeg_regress_cliptext1bcategoryalltokens_weights_sub-{subject}_800ms.pkl', "wb") as f:
     pickle.dump(datadict,f)
+
 
 # 0 -0.006960497720738112 0.06821725544159211 0.9999999999999997                                
 # 1 -0.016928714038937365 0.8211599703864206 0.5212055044038982                                         

@@ -92,7 +92,7 @@ print('train_images shape: ', train_images.shape) # (22248, 257, 768)
 print('test_images shape: ', test_images.shape) # (2400, 257, 768)
 
 # %%
-save_dir = 'cache/processed_data/' + subject + '/'
+save_dir = 'cache/thingsmeg/processed_data/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 np.save(save_dir + f'train_images1b_sub-{subject}.npy', train_images)

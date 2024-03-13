@@ -72,11 +72,11 @@ class batch_generator_external_images(Dataset):
 
 
 # image_path = 'data/processed_data/subj{:02d}/nsd_train_stim_sub{}.npy'.format(sub,sub)
-image_path = 'cache/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy'
 train_images = batch_generator_external_images(data_path = image_path)
 
 # image_path = 'data/processed_data/subj{:02d}/nsd_test_stim_sub{}.npy'.format(sub,sub)
-image_path = 'cache/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
 test_images = batch_generator_external_images(data_path = image_path)
 
 trainloader = DataLoader(train_images,batch_size,shuffle=False)
@@ -113,6 +113,6 @@ for i,x in enumerate(trainloader):
 train_latents = np.concatenate(train_latents)      
 
 # np.savez("data/extracted_features/subj{:02d}/nsd_vdvae_features_31l.npz".format(sub),train_latents=train_latents,test_latents=test_latents)
-np.save('cache/extracted_embeddings/BIGMEG1/train_autokl1b_sub-BIGMEG1.npy', train_latents)
-np.save('cache/extracted_embeddings/BIGMEG1/test_autokl1b_sub-BIGMEG1.npy', test_latents)
+np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/train_autokl1b_sub-BIGMEG1.npy', train_latents)
+np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_autokl1b_sub-BIGMEG1.npy', test_latents)
 

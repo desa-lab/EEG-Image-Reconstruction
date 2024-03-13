@@ -77,13 +77,21 @@ batch_size = 1
 # pred_text = np.load('data/predicted_features/subj{:02d}/nsd_cliptext_predtest_nsdgeneral_assumehrf.npy'.format(sub))
 # pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1b_sub-BIGMEG1.npy')
 # pred_text = np.load('cache/predicted_embeddings/BIGMEG1/thingsmeg_regress_cliptext1bcategory_sub-BIGMEG1.npy')
-pred_text = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1.npy')
+# pred_text = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1.npy')
+# pred_text = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1_200ms.npy')
+# pred_text = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1_400ms.npy')
+# pred_text = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1_600ms.npy')
+pred_text = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_cliptext1bcategoryalltokens_sub-BIGMEG1_800ms.npy')
 pred_text = torch.tensor(pred_text).half().cuda(1)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub))
 # pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_precomputed.npy')
-pred_vision = np.load('cache/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1.npy')
+# pred_vision = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1.npy')
+# pred_vision = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_200ms.npy')
+# pred_vision = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_400ms.npy')
+# pred_vision = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_600ms.npy')
+pred_vision = np.load('cache/thingsmeg/predicted_embeddings/BIGMEG1/avg_thingsmeg_regress_clipvision1b_sub-BIGMEG1_800ms.npy')
 pred_vision = torch.tensor(pred_vision).half().cuda(1)
 
 
@@ -100,7 +108,11 @@ for im_id in range(len(pred_vision)):
 
     # zim = Image.open('results/vdvae/subj{:02d}/{}.png'.format(sub,im_id))
     sub = 'BIGMEG1'
-    zim = Image.open('results/avg_vdvae1b/{}/{}.png'.format(sub,im_id))
+    # zim = Image.open('results/thingsmeg/avg_vdvae1b/{}/{}.png'.format(sub,im_id))
+    # zim = Image.open('results/thingsmeg/avg_vdvae1b_200ms/{}/{}.png'.format(sub,im_id))
+    # zim = Image.open('results/thingsmeg/avg_vdvae1b_400ms/{}/{}.png'.format(sub,im_id))
+    # zim = Image.open('results/thingsmeg/avg_vdvae1b_600ms/{}/{}.png'.format(sub,im_id))
+    zim = Image.open('results/thingsmeg/avg_vdvae1b_800ms/{}/{}.png'.format(sub,im_id))
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
@@ -184,7 +196,20 @@ for im_id in range(len(pred_vision)):
     #     os.makedirs('results/avg_versatile_diffusion1balltokens/{}/'.format(sub))
     # x[0].save('results/avg_versatile_diffusion1balltokens/{}/{}.png'.format(sub,im_id))
 
-    if not osp.exists('results/avg_versatile_diffusion/{}/'.format(sub)):
-        os.makedirs('results/avg_versatile_diffusion/{}/'.format(sub))
-    x[0].save('results/avg_versatile_diffusion/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/thingsmeg/avg_versatile_diffusion/{}/'.format(sub)):
+    #     os.makedirs('results/thingsmeg/avg_versatile_diffusion/{}/'.format(sub))
+    # x[0].save('results/thingsmeg/avg_versatile_diffusion/{}/{}.png'.format(sub,im_id))
+
+    # if not osp.exists('results/thingsmeg/avg_versatile_diffusion_200ms/{}/'.format(sub)):
+    #     os.makedirs('results/thingsmeg/avg_versatile_diffusion_200ms/{}/'.format(sub))
+    # x[0].save('results/thingsmeg/avg_versatile_diffusion_200ms/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/thingsmeg/avg_versatile_diffusion_400ms/{}/'.format(sub)):
+    #     os.makedirs('results/thingsmeg/avg_versatile_diffusion_400ms/{}/'.format(sub))
+    # x[0].save('results/thingsmeg/avg_versatile_diffusion_400ms/{}/{}.png'.format(sub,im_id))
+    # if not osp.exists('results/thingsmeg/avg_versatile_diffusion_600ms/{}/'.format(sub)):
+    #     os.makedirs('results/thingsmeg/avg_versatile_diffusion_600ms/{}/'.format(sub))
+    # x[0].save('results/thingsmeg/avg_versatile_diffusion_600ms/{}/{}.png'.format(sub,im_id))
+    if not osp.exists('results/thingsmeg/avg_versatile_diffusion_800ms/{}/'.format(sub)):
+        os.makedirs('results/thingsmeg/avg_versatile_diffusion_800ms/{}/'.format(sub))
+    x[0].save('results/thingsmeg/avg_versatile_diffusion_800ms/{}/{}.png'.format(sub,im_id))
 

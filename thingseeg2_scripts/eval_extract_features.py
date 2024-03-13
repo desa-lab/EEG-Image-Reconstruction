@@ -73,8 +73,17 @@ assert sub in [0,1,2,5,7]
 # images_dir = 'cache/thingsmeg_stimuli/avg_test_images1b'
 # feats_dir = 'cache/thingsmeg/eval_features/test_images'
 
-images_dir = 'results/avg_versatile_diffusion1balltokens/BIGMEG1'
-feats_dir = 'cache/thingsmeg/eval_features/subj1'
+# images_dir = 'results/avg_versatile_diffusion1balltokens/BIGMEG1'
+# feats_dir = 'cache/thingsmeg/eval_features/subj1'
+
+# images_dir = 'results/thingsmeg/avg_versatile_diffusion_200ms/BIGMEG1'
+# feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_200ms/BIGMEG1'
+# images_dir = 'results/thingsmeg/avg_versatile_diffusion_400ms/BIGMEG1'
+# feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_400ms/BIGMEG1'
+# images_dir = 'results/thingsmeg/avg_versatile_diffusion_600ms/BIGMEG1'
+# feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_600ms/BIGMEG1'
+images_dir = 'results/thingsmeg/avg_versatile_diffusion_800ms/BIGMEG1'
+feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_800ms/BIGMEG1'
 
 
 if not os.path.exists(feats_dir):

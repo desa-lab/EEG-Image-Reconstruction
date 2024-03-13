@@ -13,8 +13,8 @@ assert sub in [1,2,5,7]
 # nsd_features = np.load('data/extracted_features/subj{:02d}/nsd_vdvae_features_31l.npz'.format(sub))
 # train_latents = nsd_features['train_latents']
 # test_latents = nsd_features['test_latents']
-train_latents = np.load('cache/extracted_embeddings/BIGMEG1/train_autokl1b_sub-BIGMEG1.npy', mmap_mode='r')
-test_latents = np.load('cache/extracted_embeddings/BIGMEG1/test_autokl1b_sub-BIGMEG1.npy', mmap_mode='r')
+train_latents = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/train_autokl1b_sub-BIGMEG1.npy', mmap_mode='r')
+test_latents = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_autokl1b_sub-BIGMEG1.npy', mmap_mode='r')
 
 # train_path = 'data/processed_data/subj{:02d}/nsd_train_fmriavg_nsdgeneral_sub{}.npy'.format(sub,sub)
 # train_path = 'data/processed_data/subj{:02d}/nsd_train_fmriavg_nsdgeneral_assumehrf_sub{}.npy'.format(sub,sub)
@@ -24,11 +24,20 @@ test_latents = np.load('cache/extracted_embeddings/BIGMEG1/test_autokl1b_sub-BIG
 # test_path = 'data/processed_data/subj{:02d}/nsd_test_fmriavg_nsdgeneral_assumehrf_sub{}.npy'.format(sub,sub)
 # test_path = 'data/processed_data/subj{:02d}/nsd_test_fmriavg_brainmask_sub{}.npy'.format(sub,sub)
 # test_fmri = np.load(test_path)
-train_path = 'cache/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1.npy'
+
+# train_path = 'cache/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_200ms.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_400ms.npy'
+# train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_600ms.npy'
+train_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_thingsmeg_sub-BIGMEG1_800ms.npy'
 train_meg = np.load(train_path, mmap_mode='r')
 # train_meg = train_meg[:8000,:,:]
 train_meg = train_meg.reshape(train_meg.shape[0], -1)
-test_path = 'cache/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1.npy'
+# test_path = 'cache/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_200ms.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_400ms.npy'
+# test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_600ms.npy'
+test_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_thingsmeg_sub-BIGMEG1_800ms.npy'
 test_meg = np.load(test_path, mmap_mode='r')
 # test_meg = test_meg[:1000,:,:]
 test_meg = test_meg.reshape(test_meg.shape[0], -1)
@@ -81,11 +90,21 @@ print(reg.score(test_fmri,test_latents))
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_nsdgeneral_assumehrf_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
 # np.save('data/predicted_features/subj{:02d}/nsd_vdvae_brainmask_pred_sub{}_31l_alpha50k.npy'.format(sub,sub),pred_latents)
+
+# subject = 'BIGMEG1'
+# save_dir = 'cache/predicted_embeddings/' + subject + '/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}.npy', pred_latents)
+    
 subject = 'BIGMEG1'
-save_dir = 'cache/predicted_embeddings/' + subject + '/'
+save_dir = 'cache/thingsmeg/predicted_embeddings/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}.npy', pred_latents)
+# np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}_200ms.npy', pred_latents)
+# np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}_400ms.npy', pred_latents)
+# np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}_600ms.npy', pred_latents)
+np.save(save_dir + f'thingsmeg_regress_autokl1b_sub-{subject}_800ms.npy', pred_latents)
 
 
 del train_fmri
@@ -99,9 +118,23 @@ datadict = {
 # with open('data/regression_weights/subj{:02d}/vdvae_regression_weights_assumehrf.pkl'.format(sub),"wb") as f:
 # # with open('data/regression_weights/subj{:02d}/vdvae_brainmask_regression_weights.pkl'.format(sub),"wb") as f:
 #   pickle.dump(datadict,f)
+
+# subject = 'BIGMEG1'
+# save_dir = 'cache/regression_weights/' + subject + '/'
+# if not os.path.exists(save_dir):
+#     os.makedirs(save_dir)
+# with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+
 subject = 'BIGMEG1'
-save_dir = 'cache/regression_weights/' + subject + '/'
+save_dir = 'cache/thingsmeg/regression_weights/' + subject + '/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}.pkl', "wb") as f:
+# with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}_200ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+# with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}_400ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+# with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}_600ms.pkl', "wb") as f:
+#     pickle.dump(datadict,f)
+with open(save_dir + f'thingsmeg_regress_autokl1b_weights_sub-{subject}_800ms.pkl', "wb") as f:
     pickle.dump(datadict,f)

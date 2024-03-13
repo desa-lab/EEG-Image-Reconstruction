@@ -31,8 +31,8 @@ net.load_state_dict(sd, strict=False)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 net.clip = net.clip.to(device)
    
-train_caps = np.load('cache/processed_data/BIGMEG1/train_captions1b_sub-BIGMEG1.npy', mmap_mode='r') 
-test_caps = np.load('cache/processed_data/BIGMEG1/test_captions1b_sub-BIGMEG1.npy', mmap_mode='r')  
+train_caps = np.load('cache/thingsmeg/processed_data/BIGMEG1/train_captions1b_sub-BIGMEG1.npy', mmap_mode='r') 
+test_caps = np.load('cache/thingsmeg/processed_data/BIGMEG1/test_captions1b_sub-BIGMEG1.npy', mmap_mode='r')  
 print(train_caps.shape, test_caps.shape)
 
 num_embed, num_features, num_test, num_train = 77, 768, len(test_caps), len(train_caps)
@@ -48,7 +48,7 @@ with torch.no_grad():
         c = net.clip_encode_text(cin)
         test_clip[i] = c.to('cpu').numpy().mean(0)
     
-    np.save('cache/extracted_embeddings/BIGMEG1/test_cliptext1b_sub-BIGMEG1.npy',test_clip)
+    np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_cliptext1b_sub-BIGMEG1.npy',test_clip)
         
     for i,annots in enumerate(train_caps):
         # cin = list(annots[annots!=''])
@@ -57,6 +57,6 @@ with torch.no_grad():
         print(i, cin)
         c = net.clip_encode_text(cin)
         train_clip[i] = c.to('cpu').numpy().mean(0)
-    np.save('cache/extracted_embeddings/BIGMEG1/train_cliptext1b_sub-BIGMEG1.npy',train_clip)
+    np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/train_cliptext1b_sub-BIGMEG1.npy',train_clip)
 
 
