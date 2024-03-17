@@ -79,7 +79,11 @@ batch_size = 1
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_200ms.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_400ms.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_600ms.npy')
-pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms.npy')
+# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms.npy')
+# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_200ms_1regressor.npy')
+# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_400ms_1regressor.npy')
+# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_600ms_1regressor.npy')
+pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms_1regressor.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_null.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_200ms.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_400ms.npy')
@@ -93,7 +97,11 @@ pred_text = torch.tensor(pred_text).half().cuda(1)
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_200ms.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_400ms.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_600ms.npy')
-pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_200ms_1regressor.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_400ms_1regressor.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_600ms_1regressor.npy')
+pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms_1regressor.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_null.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_200ms.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_400ms.npy')
@@ -212,9 +220,25 @@ for im_id in range(len(pred_vision)):
     #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_600ms/')
     # x[0].save('results/thingseeg2_preproc/versatile_diffusion_600ms/{}.png'.format(im_id))
 
-    if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms/'):
-        os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms/')
-    x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms/{}.png'.format(im_id))
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms/{}.png'.format(im_id))
+        
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor/{}.png'.format(im_id))
+
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_400ms_1regressor/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_400ms_1regressor/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_400ms_1regressor/{}.png'.format(im_id))
+
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor/{}.png'.format(im_id))
+
+    if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/'):
+        os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/')
+    x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/{}.png'.format(im_id))
         
         
     # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_null/'):

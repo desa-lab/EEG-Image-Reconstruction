@@ -43,15 +43,21 @@ assert sub in [0,1,2,5,7]
 
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_200ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_200ms'
-
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_400ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_400ms'
-
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_600ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_600ms'
-
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms'
+
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_200ms_1regressor'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_400ms_1regressor'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_400ms_1regressor'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_600ms_1regressor'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_1regressor'
 
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_null'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_null'
@@ -59,13 +65,10 @@ assert sub in [0,1,2,5,7]
 
 # images_dir = 'results/thingseeg2/versatile_diffusion_avg1_200ms'
 # feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_200ms'
-
 # images_dir = 'results/thingseeg2/versatile_diffusion_avg1_400ms'
 # feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_400ms'
-
 # images_dir = 'results/thingseeg2/versatile_diffusion_avg1_600ms'
 # feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_600ms'
-
 # images_dir = 'results/thingseeg2/versatile_diffusion_avg1_800ms'
 # feats_dir = 'cache/thingseeg2/eval_features/subj1_avg1_800ms'
 
@@ -82,8 +85,19 @@ assert sub in [0,1,2,5,7]
 # feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_400ms/BIGMEG1'
 # images_dir = 'results/thingsmeg/avg_versatile_diffusion_600ms/BIGMEG1'
 # feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_600ms/BIGMEG1'
-images_dir = 'results/thingsmeg/avg_versatile_diffusion_800ms/BIGMEG1'
-feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_800ms/BIGMEG1'
+# images_dir = 'results/thingsmeg/avg_versatile_diffusion_800ms/BIGMEG1'
+# feats_dir = 'cache/thingsmeg/eval_features/avg_versatile_diffusion_800ms/BIGMEG1'
+
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_cliptextonly'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_cliptextonly'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_clipvisiononly'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_clipvisiononly'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noautokl'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_noautokl'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_nocliptext'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_nocliptext'
+images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noclipvision'
+feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_noclipvision'
 
 
 if not os.path.exists(feats_dir):

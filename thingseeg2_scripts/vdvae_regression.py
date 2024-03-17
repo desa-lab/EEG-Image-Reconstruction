@@ -203,8 +203,8 @@ datadict = {
 save_dir = 'cache/thingseeg2_preproc/regression_weights/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-np.save(save_dir + 'thingseeg2_regress_autokl_weights_800ms.npy', pred_latents)
-
+with open(save_dir + 'thingseeg2_regress_autokl_weights_800ms.pkl', "wb") as f:
+    pickle.dump(datadict,f)
 
 # save_dir = 'cache/thingseeg2_preproc/regression_weights/'
 # if not os.path.exists(save_dir):
