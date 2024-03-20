@@ -50,6 +50,9 @@ assert sub in [0,1,2,5,7]
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms'
 
+images_dir = 'results/thingseeg2_preproc/sub10/versatile_diffusion_800ms'
+feats_dir = 'cache/thingseeg2_preproc/eval_features/subj10_preproc_800ms'
+
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_200ms_1regressor'
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_400ms_1regressor'
@@ -96,8 +99,8 @@ assert sub in [0,1,2,5,7]
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_noautokl'
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_nocliptext'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_nocliptext'
-images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noclipvision'
-feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_noclipvision'
+# images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noclipvision'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms_noclipvision'
 
 
 if not os.path.exists(feats_dir):

@@ -40,8 +40,8 @@ class BrainModule(nn.Module):
         padding5 = (kernel_size - 1) * dilation5 // 2
         padding6 = (kernel_size - 1) * dilation6 // 2
 
-        #self.spatial_attention = nn.Conv1d(input_channels, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
-        self.spatial_attention = SpatialAttentionLayer(conv_dim=input_channels,out_dim=270,kernel_size=kernel_size)
+        self.spatial_attention = nn.Conv1d(input_channels, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
+        # self.spatial_attention = SpatialAttentionLayer(conv_dim=input_channels,out_dim=270,kernel_size=kernel_size)
         self.linear_proj1 = nn.Conv1d(270, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
         self.linear_proj2 = nn.Conv1d(270, 270, kernel_size=1, stride=1) # original kernel_size=3, stride=1, padding=1
         # self.res_dilated_conv1 = nn.Conv1d(270, 320, kernel_size=3, stride=1, padding=1)

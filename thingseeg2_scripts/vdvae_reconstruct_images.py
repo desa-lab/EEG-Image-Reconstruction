@@ -101,7 +101,7 @@ test_latents = np.concatenate(test_latents)
 # pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_200ms.npy')
 # pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_400ms.npy')
 # pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_600ms.npy')
-pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_800ms.npy')
+pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub10/thingseeg2_regress_autokl_800ms.npy')
 # pred_latents = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_null.npy')
 # pred_latents = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_autokl_avg1_200ms.npy')
 # pred_latents = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_autokl_avg1_400ms.npy')
@@ -168,10 +168,10 @@ for i in range(int(np.ceil(len(test_images)/batch_size))):
       #     os.makedirs(save_dir)
       # im.save('results/thingseeg2_preproc/vdvae_600ms/{}.png'.format(i*batch_size+j))
 
-      save_dir = 'results/thingseeg2_preproc/vdvae_800ms/' 
+      save_dir = 'results/thingseeg2_preproc/sub10/vdvae_800ms/' 
       if not os.path.exists(save_dir):
           os.makedirs(save_dir)
-      im.save('results/thingseeg2_preproc/vdvae_800ms/{}.png'.format(i*batch_size+j))
+      im.save('results/thingseeg2_preproc/sub10/vdvae_800ms/{}.png'.format(i*batch_size+j))
 
 
       # save_dir = 'results/thingseeg2_preproc/vdvae_null/' 

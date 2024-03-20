@@ -32,6 +32,7 @@ sub=int(args.sub)
 assert sub in [1,2,5,7]
 strength = float(args.diff_str)
 mixing = float(args.mix_str)
+gpu_offset = 2
 
 
 def regularize_image(x):
@@ -64,8 +65,8 @@ net.load_state_dict(sd, strict=False)
 
 
 # Might require editing the GPU assignments due to Memory issues
-net.clip.cuda(0)
-net.autokl.cuda(0)
+net.clip.cuda(0 + gpu_offset)
+net.autokl.cuda(0 + gpu_offset)
 
 #net.model.cuda(1)
 sampler = sampler(net)
@@ -79,17 +80,17 @@ batch_size = 1
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_200ms.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_400ms.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_600ms.npy')
-# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms.npy')
+pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub10/thingseeg2_regress_cliptext_800ms.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_200ms_1regressor.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_400ms_1regressor.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_600ms_1regressor.npy')
-pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms_1regressor.npy')
+# pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_800ms_1regressor.npy')
 # pred_text = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_cliptext_null.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_200ms.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_400ms.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_600ms.npy')
 # pred_text = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_cliptext_avg1_800ms.npy')
-pred_text = torch.tensor(pred_text).half().cuda(1)
+pred_text = torch.tensor(pred_text).half().cuda(1 + gpu_offset)
 
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral.npy'.format(sub))
 # pred_vision = np.load('data/predicted_features/subj{:02d}/nsd_clipvision_predtest_nsdgeneral_assumehrf.npy'.format(sub))
@@ -97,17 +98,18 @@ pred_text = torch.tensor(pred_text).half().cuda(1)
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_200ms.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_400ms.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_600ms.npy')
-# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms.npy')
+pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub10/thingseeg2_regress_clipvision_800ms.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_200ms_1regressor.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_400ms_1regressor.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_600ms_1regressor.npy')
-pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms_1regressor.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_800ms_1regressor.npy')
 # pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_clipvision_null.npy')
+# pred_vision = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_dnn_clipvision_800ms.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_200ms.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_400ms.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_600ms.npy')
 # pred_vision = np.load('cache/thingseeg2/predicted_embeddings/thingseeg2_regress_clipvision_avg1_800ms.npy')
-pred_vision = torch.tensor(pred_vision).half().cuda(1)
+pred_vision = torch.tensor(pred_vision).half().cuda(1 + gpu_offset)
 
 
 n_samples = 1
@@ -126,7 +128,7 @@ for im_id in range(len(pred_vision)):
     # zim = Image.open('results/thingseeg2_preproc/vdvae_200ms/{}.png'.format(im_id))
     # zim = Image.open('results/thingseeg2_preproc/vdvae_400ms/{}.png'.format(im_id))
     # zim = Image.open('results/thingseeg2_preproc/vdvae_600ms/{}.png'.format(im_id))
-    zim = Image.open('results/thingseeg2_preproc/vdvae_800ms/{}.png'.format(im_id))
+    zim = Image.open('results/thingseeg2_preproc/sub10/vdvae_800ms/{}.png'.format(im_id))
     # zim = Image.open('results/thingseeg2_preproc/vdvae_null/{}.png'.format(im_id))
     # zim = Image.open('results/thingseeg2/vdvae_avg1_200ms/{}.png'.format(im_id))
     # zim = Image.open('results/thingseeg2/vdvae_avg1_400ms/{}.png'.format(im_id))
@@ -135,7 +137,7 @@ for im_id in range(len(pred_vision)):
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
-    zin = zin.unsqueeze(0).cuda(0).half()
+    zin = zin.unsqueeze(0).cuda(0 + gpu_offset).half()
 
     init_latent = net.autokl_encode(zin)
     
@@ -143,19 +145,19 @@ for im_id in range(len(pred_vision)):
     #strength=0.75
     assert 0. <= strength <= 1., 'can only work with strength in [0.0, 1.0]'
     t_enc = int(strength * ddim_steps)
-    device = 'cuda:0'
+    device = 'cuda:' + str(gpu_offset)
     z_enc = sampler.stochastic_encode(init_latent, torch.tensor([t_enc]).to(device))
     #z_enc,_ = sampler.encode(init_latent.cuda(1).half(), c.cuda(1).half(), torch.tensor([t_enc]).to(sampler.model.model.diffusion_model.device))
 
     dummy = ''
     utx = net.clip_encode_text(dummy)
-    utx = utx.cuda(1).half()
+    utx = utx.cuda(1 + gpu_offset).half()
     
-    dummy = torch.zeros((1,3,224,224)).cuda(0)
+    dummy = torch.zeros((1,3,224,224)).cuda(0 + gpu_offset)
     uim = net.clip_encode_vision(dummy)
-    uim = uim.cuda(1).half()
+    uim = uim.cuda(1 + gpu_offset).half()
     
-    z_enc = z_enc.cuda(1)
+    z_enc = z_enc.cuda(1 + gpu_offset)
 
     h, w = 512,512
     shape = [n_samples, 4, h//8, w//8]
@@ -166,8 +168,8 @@ for im_id in range(len(pred_vision)):
     #c[:,0] = u[:,0]
     #z_enc = z_enc.cuda(1).half()
     
-    sampler.model.model.diffusion_model.device='cuda:1'
-    sampler.model.model.diffusion_model.half().cuda(1)
+    sampler.model.model.diffusion_model.device='cuda:' + str(1 + gpu_offset)
+    sampler.model.model.diffusion_model.half().cuda(1 + gpu_offset)
     #mixing = 0.4
     
     z = sampler.decode_dc(
@@ -181,7 +183,7 @@ for im_id in range(len(pred_vision)):
         second_ctype='prompt',
         mixed_ratio=(1-mixing), )
     
-    z = z.cuda(0).half()
+    z = z.cuda(0 + gpu_offset).half()
     x = net.autokl_decode(z)
     color_adj='None'
     #color_adj_to = cin[0]
@@ -220,9 +222,10 @@ for im_id in range(len(pred_vision)):
     #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_600ms/')
     # x[0].save('results/thingseeg2_preproc/versatile_diffusion_600ms/{}.png'.format(im_id))
 
-    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms/'):
-    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms/')
-    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms/{}.png'.format(im_id))
+    save_dir = 'results/thingseeg2_preproc/sub10/versatile_diffusion_800ms/'
+    if not osp.exists(save_dir):
+        os.makedirs(save_dir)
+    x[0].save(save_dir + '{}.png'.format(im_id))
         
     # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor/'):
     #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor/')
@@ -236,14 +239,18 @@ for im_id in range(len(pred_vision)):
     #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor/')
     # x[0].save('results/thingseeg2_preproc/versatile_diffusion_600ms_1regressor/{}.png'.format(im_id))
 
-    if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/'):
-        os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/')
-    x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/{}.png'.format(im_id))
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms_1regressor/{}.png'.format(im_id))
         
         
     # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_null/'):
     #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_null/')
     # x[0].save('results/thingseeg2_preproc/versatile_diffusion_null/{}.png'.format(im_id))
+        
+    # if not osp.exists('results/thingseeg2_preproc/versatile_diffusion_800ms_dnnvision/'):
+    #     os.makedirs('results/thingseeg2_preproc/versatile_diffusion_800ms_dnnvision/')
+    # x[0].save('results/thingseeg2_preproc/versatile_diffusion_800ms_dnnvision/{}.png'.format(im_id))
         
     # if not osp.exists('results/thingseeg2/versatile_diffusion_avg1_200ms/'):
     #     os.makedirs('results/thingseeg2/versatile_diffusion_avg1_200ms/')

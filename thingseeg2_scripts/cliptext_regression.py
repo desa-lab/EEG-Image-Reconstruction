@@ -15,7 +15,7 @@ assert sub in [1,2,5,7]
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_200ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_400ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_600ms.npy'
-train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_800ms.npy'
+train_path = 'data/things-eeg2_preproc/sub10/train_thingseeg2_avg_800ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
 # train_path = 'data/thingseeg2/train_thingseeg2_avg1_200ms.npy'
 # train_path = 'data/thingseeg2/train_thingseeg2_avg1_400ms.npy'
@@ -28,7 +28,7 @@ train_meg = train_meg.reshape(train_meg.shape[0], -1)
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_200ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_400ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_600ms.npy'
-test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_800ms.npy'
+test_path = 'data/things-eeg2_preproc/sub10/test_thingseeg2_avg_800ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
 # test_path = 'data/thingseeg2/test_thingseeg2_avg1_200ms.npy'
 # test_path = 'data/thingseeg2/test_thingseeg2_avg1_400ms.npy'
@@ -117,7 +117,7 @@ for i in range(num_embed):
 #     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_cliptext_600ms.npy', pred_clip)
 
-save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
+save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/sub10/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 np.save(save_dir + 'thingseeg2_regress_cliptext_800ms.npy', pred_clip)
@@ -184,7 +184,7 @@ datadict = {
 # with open(save_dir + 'thingseeg2_regress_cliptext_weights_600ms.pkl', "wb") as f:
 #     pickle.dump(datadict,f)
 
-save_dir = 'cache/thingseeg2_preproc/regression_weights/'
+save_dir = 'cache/thingseeg2_preproc/regression_weights/sub10/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 with open(save_dir + 'thingseeg2_regress_cliptext_weights_800ms.pkl', "wb") as f:
