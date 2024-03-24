@@ -6,16 +6,22 @@ import os
 from scipy.spatial.distance import correlation
 from tqdm import tqdm
 
-epochs = np.load('cache/thingseeg2_synthetic/sub01_4to0__5_1__800ms.npy')
+gpu1 = 6
+gpu2 = 7
+
+# epochs = np.load('cache/thingseeg2_synthetic/sub01_4to0__5_1__800ms.npy')
+epochs = np.load('cache/thingseeg2_synthetic/sub01_ica16_800ms.npy')
 # epochs = np.load('cache/thingseeg2_synthetic/not_much_real__cat_real__0_80_800ms.npy')
 # epochs = np.load('data/things-eeg2_preproc/test_thingseeg2_avg_800ms.npy')
 
 epochs = epochs.reshape(epochs.shape[0], -1) # concatenate all time points
 # vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_not_much_real__cat_real__0_20_800ms/'
-vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_4to0__5_1__800ms.npy/'
+# vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_4to0__5_1__800ms.npy/'
+vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_ica16_800ms.npy/'
 # vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_temp/'
 # diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_not_much_real__cat_real__0_20_800ms/'
-diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_4to0__5_1__800ms/'
+# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_4to0__5_1__800ms/'
+diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_ica16_800ms/'
 # diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noautokl/'
 # diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_clipvisiononly/'
 # diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_temp/'
@@ -378,8 +384,8 @@ net.load_state_dict(sd, strict=False)
 
 
 # Might require editing the GPU assignments due to Memory issues
-net.clip.cuda(0)
-net.autokl.cuda(0)
+net.clip.cuda(gpu1)
+net.autokl.cuda(gpu1)
 
 #net.model.cuda(1)
 sampler = sampler(net)
@@ -389,10 +395,10 @@ batch_size = 1
 
 # save_dir = 'cache/thingseeg2_synthetic/predicted_embeddings/'
 # pred_cliptext = np.load(save_dir + 'thingseeg2_regress_cliptext_not_much_real__cat_real__20_40_800ms.npy')
-pred_cliptext = torch.tensor(pred_cliptext).half().cuda(1)
+pred_cliptext = torch.tensor(pred_cliptext).half().cuda(gpu2)
 
 # pred_clipvision = np.load(save_dir + 'thingseeg2_regress_clipvision_not_much_real__cat_real__20_40_800ms.npy')
-pred_clipvision = torch.tensor(pred_clipvision).half().cuda(1)
+pred_clipvision = torch.tensor(pred_clipvision).half().cuda(gpu2)
 
 
 n_samples = 1
@@ -411,7 +417,7 @@ for im_id in range(len(pred_clipvision)):
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
-    zin = zin.unsqueeze(0).cuda(0).half()
+    zin = zin.unsqueeze(0).cuda(gpu1).half()
 
     init_latent = net.autokl_encode(zin)
     
@@ -419,19 +425,19 @@ for im_id in range(len(pred_clipvision)):
     #strength=0.75
     assert 0. <= strength <= 1., 'can only work with strength in [0.0, 1.0]'
     t_enc = int(strength * ddim_steps)
-    device = 'cuda:0'
+    device = 'cuda:' + str(gpu1)
     z_enc = sampler.stochastic_encode(init_latent, torch.tensor([t_enc]).to(device))
     #z_enc,_ = sampler.encode(init_latent.cuda(1).half(), c.cuda(1).half(), torch.tensor([t_enc]).to(sampler.model.model.diffusion_model.device))
 
     dummy = ''
     utx = net.clip_encode_text(dummy)
-    utx = utx.cuda(1).half()
+    utx = utx.cuda(gpu2).half()
     
-    dummy = torch.zeros((1,3,224,224)).cuda(0)
+    dummy = torch.zeros((1,3,224,224)).cuda(gpu1)
     uim = net.clip_encode_vision(dummy)
-    uim = uim.cuda(1).half()
+    uim = uim.cuda(gpu2).half()
     
-    z_enc = z_enc.cuda(1)
+    z_enc = z_enc.cuda(gpu2)
 
     h, w = 512,512
     shape = [n_samples, 4, h//8, w//8]
@@ -442,8 +448,8 @@ for im_id in range(len(pred_clipvision)):
     #c[:,0] = u[:,0]
     #z_enc = z_enc.cuda(1).half()
     
-    sampler.model.model.diffusion_model.device='cuda:1'
-    sampler.model.model.diffusion_model.half().cuda(1)
+    sampler.model.model.diffusion_model.device='cuda:' + str(gpu2)
+    sampler.model.model.diffusion_model.half().cuda(gpu2)
     #mixing = 0.4
     
     z = sampler.decode_dc(
@@ -459,7 +465,7 @@ for im_id in range(len(pred_clipvision)):
         second_ctype='prompt',
         mixed_ratio=(1-mixing), )
     
-    z = z.cuda(0).half()
+    z = z.cuda(gpu1).half()
     x = net.autokl_decode(z)
     color_adj='None'
     #color_adj_to = cin[0]

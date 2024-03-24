@@ -50,8 +50,11 @@ assert sub in [0,1,2,5,7]
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_800ms'
 
-images_dir = 'results/thingseeg2_preproc/sub10/versatile_diffusion_800ms'
-feats_dir = 'cache/thingseeg2_preproc/eval_features/subj10_preproc_800ms'
+# images_dir = 'results/thingseeg2_preproc/sub10/versatile_diffusion_800ms'
+# feats_dir = 'cache/thingseeg2_preproc/eval_features/subj10_preproc_800ms'
+
+images_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_ica16_800ms'
+feats_dir = 'cache/thingseeg2_synthetic/eval_features/subj1_ica16_800ms'
 
 # images_dir = 'results/thingseeg2_preproc/versatile_diffusion_200ms_1regressor'
 # feats_dir = 'cache/thingseeg2_preproc/eval_features/subj1_preproc_200ms_1regressor'
