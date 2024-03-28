@@ -53,10 +53,10 @@ class batch_generator_external_images(Dataset):
         return  len(self.im)
     
 batch_size=1
-image_path = 'cache/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/train_images1b_sub-BIGMEG1.npy'
 train_images = batch_generator_external_images(data_path = image_path)
 
-image_path = 'cache/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
+image_path = 'cache/thingsmeg/processed_data/BIGMEG1/test_images1b_sub-BIGMEG1.npy'
 test_images = batch_generator_external_images(data_path = image_path)
 
 trainloader = DataLoader(train_images,batch_size,shuffle=False)
@@ -74,14 +74,14 @@ with torch.no_grad():
         c = net.clip_encode_vision(cin)
         test_clip[i] = c[0].cpu().numpy()
     
-    np.save('cache/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1.npy',test_clip)
+    np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1_temp.npy',test_clip)
         
     for i,cin in enumerate(trainloader):
         print(i)
         #ctemp = cin*2 - 1
         c = net.clip_encode_vision(cin)
         train_clip[i] = c[0].cpu().numpy()
-    np.save('cache/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1.npy',train_clip)
+    np.save('cache/thingsmeg/extracted_embeddings/BIGMEG1/train_clipvision1b_sub-BIGMEG1_temp.npy',train_clip)
 
 
 

@@ -15,7 +15,7 @@ assert sub in [1,2,5,7]
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_200ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_400ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_avg_600ms.npy'
-train_path = 'data/things-eeg2_preproc/sub10/train_thingseeg2_avg_800ms.npy'
+train_path = 'data/things-eeg2_preproc/sub01/train_thingseeg2_avg_800ms.npy'
 # train_path = 'data/things-eeg2_preproc/train_thingseeg2_null.npy'
 # train_path = 'data/thingseeg2/train_thingseeg2_avg1_200ms.npy'
 # train_path = 'data/thingseeg2/train_thingseeg2_avg1_400ms.npy'
@@ -28,7 +28,7 @@ train_meg = train_meg.reshape(train_meg.shape[0], -1)
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_200ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_400ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_avg_600ms.npy'
-test_path = 'data/things-eeg2_preproc/sub10/test_thingseeg2_avg_800ms.npy'
+test_path = 'data/things-eeg2_preproc/sub01/test_thingseeg2_avg_800ms.npy'
 # test_path = 'data/things-eeg2_preproc/test_thingseeg2_null.npy'
 # test_path = 'data/thingseeg2/test_thingseeg2_avg1_200ms.npy'
 # test_path = 'data/thingseeg2/test_thingseeg2_avg1_400ms.npy'
@@ -106,13 +106,13 @@ for i in range(num_embed):
 #     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_clipvision.npy', pred_clip)
     
-save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/sub10/'
+save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/sub01/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 # np.save(save_dir + 'thingseeg2_regress_clipvision_200ms.npy', pred_clip)
 # np.save(save_dir + 'thingseeg2_regress_clipvision_400ms.npy', pred_clip)
 # np.save(save_dir + 'thingseeg2_regress_clipvision_600ms.npy', pred_clip)
-np.save(save_dir + 'thingseeg2_regress_clipvision_800ms.npy', pred_clip)
+np.save(save_dir + 'thingseeg2_regress_clipvision_800ms_temp.npy', pred_clip)
 
 # save_dir = 'cache/thingseeg2_preproc/predicted_embeddings/'
 # if not os.path.exists(save_dir):
@@ -162,7 +162,7 @@ datadict = {
 # with open(save_dir + 'thingseeg2_regress_clipvision_weights.pkl', "wb") as f:
 #     pickle.dump(datadict,f)
 
-save_dir = 'cache/thingseeg2_preproc/regression_weights/sub10/'
+save_dir = 'cache/thingseeg2_preproc/regression_weights/sub01/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 # with open(save_dir + 'thingseeg2_regress_clipvision_weights_200ms.pkl', "wb") as f:
@@ -171,7 +171,7 @@ if not os.path.exists(save_dir):
 #     pickle.dump(datadict,f)
 # with open(save_dir + 'thingseeg2_regress_clipvision_weights_600ms.pkl', "wb") as f:
 #     pickle.dump(datadict,f)
-with open(save_dir + 'thingseeg2_regress_clipvision_weights_800ms.pkl', "wb") as f:
+with open(save_dir + 'thingseeg2_regress_clipvision_weights_800ms_temp.pkl', "wb") as f:
     pickle.dump(datadict,f)
 
 # save_dir = 'cache/thingseeg2_preproc/regression_weights/'

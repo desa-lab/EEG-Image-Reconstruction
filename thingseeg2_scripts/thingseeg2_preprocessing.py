@@ -63,11 +63,11 @@ epochs_np = epochs_np[:,:,:,:120]
 epochs_np_avg = epochs_np.mean(1)
 
 train_thingseeg2_avg = epochs_np_avg[:,:,20:]
-np.save('data/thingseeg2/train_thingseeg2_avg1.npy', train_thingseeg2_avg)
-np.save('data/thingseeg2/train_thingseeg2_avg1_200ms.npy', train_thingseeg2_avg[:,:,:20])
-np.save('data/thingseeg2/train_thingseeg2_avg1_400ms.npy', train_thingseeg2_avg[:,:,:40])
-np.save('data/thingseeg2/train_thingseeg2_avg1_600ms.npy', train_thingseeg2_avg[:,:,:60])
-np.save('data/thingseeg2/train_thingseeg2_avg1_800ms.npy', train_thingseeg2_avg[:,:,:80])
+np.save('data/thingseeg2/train_thingseeg2_avg1_mvnn.npy', train_thingseeg2_avg)
+np.save('data/thingseeg2/train_thingseeg2_avg1_200ms_mvnn.npy', train_thingseeg2_avg[:,:,:20])
+np.save('data/thingseeg2/train_thingseeg2_avg1_400ms_mvnn.npy', train_thingseeg2_avg[:,:,:40])
+np.save('data/thingseeg2/train_thingseeg2_avg1_600ms_mvnn.npy', train_thingseeg2_avg[:,:,:60])
+np.save('data/thingseeg2/train_thingseeg2_avg1_800ms_mvnn.npy', train_thingseeg2_avg[:,:,:80])
 
 
 raw_list = []
@@ -121,8 +121,8 @@ epochs_np = epochs_np[:,:,:,:120]
 epochs_np_avg = epochs_np.mean(1)
 
 test_thingseeg2_avg = epochs_np_avg[:,:,20:]
-np.save('data/thingseeg2/test_thingseeg2_avg1.npy', test_thingseeg2_avg)
-np.save('data/thingseeg2/test_thingseeg2_avg1_200ms.npy', test_thingseeg2_avg[:,:,:20])
-np.save('data/thingseeg2/test_thingseeg2_avg1_400ms.npy', test_thingseeg2_avg[:,:,:40])
-np.save('data/thingseeg2/test_thingseeg2_avg1_600ms.npy', test_thingseeg2_avg[:,:,:60])
-np.save('data/thingseeg2/test_thingseeg2_avg1_800ms.npy', test_thingseeg2_avg[:,:,:80])
+np.save('data/thingseeg2/test_thingseeg2_avg1_mvnn.npy', test_thingseeg2_avg)
+np.save('data/thingseeg2/test_thingseeg2_avg1_200ms_mvnn.npy', test_thingseeg2_avg[:,:,:20])
+np.save('data/thingseeg2/test_thingseeg2_avg1_400ms_mvnn.npy', test_thingseeg2_avg[:,:,:40])
+np.save('data/thingseeg2/test_thingseeg2_avg1_600ms_mvnn.npy', test_thingseeg2_avg[:,:,:60])
+np.save('data/thingseeg2/test_thingseeg2_avg1_800ms_mvnn.npy', test_thingseeg2_avg[:,:,:80])

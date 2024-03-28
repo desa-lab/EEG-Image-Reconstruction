@@ -74,14 +74,14 @@ with torch.no_grad():
         c = net.clip_encode_vision(cin)
         test_clip[i] = c[0].cpu().numpy()
     
-    np.save('cache/thingseeg2_preproc/extracted_embeddings/test_clipvision.npy',test_clip)
+    np.save('cache/thingseeg2_preproc/extracted_embeddings/test_clipvision_temp.npy',test_clip)
         
     for i,cin in enumerate(trainloader):
         print(i)
         #ctemp = cin*2 - 1
         c = net.clip_encode_vision(cin)
         train_clip[i] = c[0].cpu().numpy()
-    np.save('cache/thingseeg2_preproc/extracted_embeddings/train_clipvision.npy',train_clip)
+    np.save('cache/thingseeg2_preproc/extracted_embeddings/train_clipvision_temp.npy',train_clip)
 
 
 

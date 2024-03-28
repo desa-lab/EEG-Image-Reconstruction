@@ -6,22 +6,22 @@ import os
 from scipy.spatial.distance import correlation
 from tqdm import tqdm
 
-gpu1 = 6
-gpu2 = 7
+gpu1 = 4
+gpu2 = 5
 
-# epochs = np.load('cache/thingseeg2_synthetic/sub01_4to0__5_1__800ms.npy')
-epochs = np.load('cache/thingseeg2_synthetic/sub01_ica16_800ms.npy')
+epochs = np.load('cache/thingseeg2_synthetic/sub01_35to9__5_1__800ms.npy')
+# epochs = np.load('cache/thingseeg2_synthetic/sub01_ica16_800ms.npy')
 # epochs = np.load('cache/thingseeg2_synthetic/not_much_real__cat_real__0_80_800ms.npy')
 # epochs = np.load('data/things-eeg2_preproc/test_thingseeg2_avg_800ms.npy')
 
 epochs = epochs.reshape(epochs.shape[0], -1) # concatenate all time points
 # vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_not_much_real__cat_real__0_20_800ms/'
-# vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_4to0__5_1__800ms.npy/'
-vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_ica16_800ms.npy/'
+vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_35to9__5_1__800ms.npy/'
+# vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_ica16_800ms.npy/'
 # vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_temp/'
 # diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_not_much_real__cat_real__0_20_800ms/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_4to0__5_1__800ms/'
-diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_ica16_800ms/'
+diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_35to9__5_1__800ms/'
+# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_ica16_800ms/'
 # diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noautokl/'
 # diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_clipvisiononly/'
 # diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_temp/'

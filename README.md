@@ -2,7 +2,8 @@
 This section covers the visual reconstruction using the THINGS-MEG dataset
 
 ## Getting started
-1. Follow instructions from brainmagick and brain-diffusor to create the python environments for both
+1. Follow instructions from brainmagick and brain-diffusor to create the python environments for both\
+Note: please make sure tokenizers==0.12.1 and transformers==4.19.2
 
 <!-- 2. TODO: data downloading instructions -->
 2. Download the THINGS-Images, then save the images and categories as numpy files:
