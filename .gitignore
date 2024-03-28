@@ -2,6 +2,5 @@ cache/
 misc/
 __pycache__/
 diffusion/
-diffusion_/
 data/
 results/
