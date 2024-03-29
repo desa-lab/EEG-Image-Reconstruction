@@ -10,6 +10,13 @@ UMAP of Final CLIP Embeddings for ground truth (blue) and reconstructed images (
 ![swapping](figures/swapping.png)
 Examples of data segment swapping. Each pair of rows represents the 2 images that have parts of the EEG swapped. The images for each pair of rows from top to bottom are: "gorilla_18s.jpg" and "gopher_09s.jpg"; "chaps_18s.jpg" and "headscarf_03s.jpg"; "cat_01b.jpg" and "coverall_06s.jpg"; "sausage_04s.jpg" and "piglet_02s.jpg"; "caterpillar_03s.jpg" and "possum_05s.jpg"; "cart_09s.jpg" and "elephant_11n.jpg". Each image in a row represents the result of swapping a time window of 50ms (5 samples). The next image is the result of moving the time window by 10ms (1 sample). The last image of each row is added as a reference since it does not have any swapping.
 
+## Performance
+<!-- ![in_context](figures/in_context.png)
+![across_subjects](figures/across_subjects.png) -->
+<!-- <img src="figures/in_context.png" width="500" height="300"> -->
+<img src="figures/in_context.png" width="300"> <img src="figures/across_subjects.png" width="200">
+
+
 
 # EEG visual reconstruction
 This section covers the visual reconstruction using the THINGS-EEG2 dataset
