@@ -1,6 +1,4 @@
 cache/
 misc/
 __pycache__/
-diffusion/
-data/
-results/
+pyenv/

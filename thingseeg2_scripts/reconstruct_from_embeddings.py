@@ -7,31 +7,14 @@ from scipy.spatial.distance import correlation
 from tqdm import tqdm
 
 gpu1 = 0
-gpu2 = 1
+gpu2 = 0
 
+pred_autokl = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_vdvae.npy')
+pred_cliptext = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_cliptext.npy')
+pred_clipvision = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_clipvision.npy')
 
-pred_autokl = np.load('cache/thingseeg2_preproc/predicted_embeddings/thingseeg2_regress_autokl_800ms.npy')
-# pred_cliptext = np.load('cache/thingseeg2_synthetic/ica_embeddings/test_cliptexteos.npy')
-# pred_clipvision = np.load('cache/thingseeg2_synthetic/ica_embeddings/test_clipvisioncls.npy')
-# pred_cliptext = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub01/thingseeg2_regress_cliptext_800ms.npy')
-# pred_clipvision = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub01/thingseeg2_regress_clipvision_800ms.npy')
-pred_cliptext = np.load('cache/thingseeg2_preproc/extracted_embeddings/test_cliptext.npy')
-pred_clipvision = np.load('cache/thingseeg2_preproc/extracted_embeddings/test_clipvision_temp.npy')
-# pred_cliptext = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_cliptext1b_sub-BIGMEG1.npy')
-# pred_clipvision = np.load('cache/thingsmeg/extracted_embeddings/BIGMEG1/test_clipvision1b_sub-BIGMEG1_temp.npy')
-
-
-# vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_ref_1token/'
-# vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_sub01_ica16_800ms.npy/'
-vdvae_recon_dir = 'results/thingseeg2_synthetic/vdvae_temp/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_not_much_real__cat_real__0_20_800ms/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_ref_1token/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_ref/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_35to9__5_1__800ms/'
-# diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_sub01_ica16_800ms/'
-# diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_noautokl/'
-# diffusion_recon_dir = 'results/thingseeg2_preproc/versatile_diffusion_800ms_clipvisiononly/'
-diffusion_recon_dir = 'results/thingseeg2_synthetic/versatile_diffusion_temp/'
+vdvae_recon_dir = 'results/thingseeg2_preproc/sub-01/vdvae/'
+diffusion_recon_dir = 'results/thingseeg2_preproc/sub-01/versatile_diffusion/'
 
 
 
@@ -71,11 +54,11 @@ import pickle
 
 import argparse
 parser = argparse.ArgumentParser(description='Argument Parser')
-parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
+# parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 parser.add_argument("-bs", "--bs",help="Batch Size",default=30)
 args = parser.parse_args()
-sub=int(args.sub)
-assert sub in [1,2,5,7]
+# sub=int(args.sub)
+# assert sub in [1,2,5,7]
 batch_size=int(args.bs)
 
 print('Libs imported')
@@ -112,33 +95,12 @@ class batch_generator_external_images(Dataset):
     def __len__(self):
         return  len(self.im)
 
-
-# image_path = 'data/processed_data/subj{:02d}/nsd_test_stim_sub{}.npy'.format(sub,sub)
-image_path = 'data/things-eeg2_preproc/test_images.npy'
-test_images = batch_generator_external_images(data_path = image_path)
-testloader = DataLoader(test_images,batch_size,shuffle=False)
-
-# test_latents = []
-for i,x in enumerate(testloader):
-  data_input, target = preprocess_fn(x)
-  with torch.no_grad():
-        print(i*batch_size)
-        activations = ema_vae.encoder.forward(data_input)
-        px_z, stats = ema_vae.decoder.forward(activations, get_latents=True)
-        #recons = ema_vae.decoder.out_net.sample(px_z)
-        # batch_latent = []
-        # for i in range(31):
-        #     batch_latent.append(stats[i]['z'].cpu().numpy().reshape(len(data_input),-1))
-        # test_latents.append(np.hstack(batch_latent))
-        #stats_all.append(stats)
-        #imshow(imgrid(recons, cols=batch_size,pad=20))
-        #imshow(imgrid(test_images[i*batch_size : (i+1)*batch_size], cols=batch_size,pad=20))
-# test_latents = np.concatenate(test_latents)      
-
-
-# pred_latents = np.load(save_dir + 'thingseeg2_regress_autokl_not_much_real__cat_real__20_40_800ms.npy')
 pred_latents = pred_autokl.copy()
 
+data_input, target = preprocess_fn(torch.zeros(1, 64, 64, 3))
+with torch.no_grad():
+    activations = ema_vae.encoder.forward(data_input)
+    px_z, stats = ema_vae.decoder.forward(activations, get_latents=True)
 ref_latent = stats
 
 # Transfor latents from flattened representation to hierarchical
@@ -167,7 +129,10 @@ def sample_from_hier_latents(latents,sample_ids):
 
 #samples = []
 
-for i in range(int(np.ceil(len(test_images)/batch_size))):
+torch.manual_seed(0)
+torch.cuda.manual_seed(0)
+
+for i in range(int(np.ceil(200/batch_size))):
   print(i*batch_size)
   samp = sample_from_hier_latents(input_latent,range(i*batch_size,(i+1)*batch_size))
   px_z = ema_vae.decoder.forward_manual_latents(len(samp[0]), samp, t=None)
@@ -213,13 +178,13 @@ from skimage.transform import resize, downscale_local_mean
 
 import argparse
 parser = argparse.ArgumentParser(description='Argument Parser')
-parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
+# parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
 parser.add_argument("-diff_str", "--diff_str",help="Diffusion Strength",default=0.75)
 parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4)
 args = parser.parse_args()
-sub=int(args.sub)
-assert sub in [1,2,5,7]
-strength = 0.99 # 0.75 normal, 0.99 max
+# sub=int(args.sub)
+# assert sub in [1,2,5,7]
+strength = 0.75 # 0.75 normal, 0.99 max
 mixing = 0.4 # 0 for pure clipvision, 1 for pure cliptext
 
 
@@ -279,10 +244,11 @@ ctype = 'prompt'
 net.autokl.half()
 
 torch.manual_seed(0)
+torch.cuda.manual_seed(0)
 for im_id in range(len(pred_cliptext)):
 
-    # zim = Image.open(vdvae_recon_dir + '{}.png'.format(im_id))
-    zim = Image.new('RGB', (64, 64), (128, 128, 128))
+    zim = Image.open(vdvae_recon_dir + '{}.png'.format(im_id))
+    # zim = Image.new('RGB', (64, 64), (128, 128, 128))
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
