@@ -44,7 +44,7 @@ test_latents = np.load('cache/thingseeg2_extracted_embeddings/test_autokl.npy', 
 print(train_latents.shape, test_latents.shape)
 
 print("Training VDVAE Regression")
-reg = skl.Ridge(alpha=50000, max_iter=10000, fit_intercept=True) # alpha=50000
+reg = skl.Ridge(alpha=1000, max_iter=50000, fit_intercept=True)
 reg.fit(eeg_train, train_latents)
 print('VDVAE training complete')
 
@@ -88,7 +88,7 @@ reg_b = np.zeros((num_token,num_dim)).astype(np.float32)
 pred_clip = np.zeros_like(test_clip)
 for i in range(num_token):
 
-    reg = skl.Ridge(alpha=60000, max_iter=50000, fit_intercept=True) # alpha=60000
+    reg = skl.Ridge(alpha=1000, max_iter=50000, fit_intercept=True)
     reg.fit(eeg_train, train_clip[:,i])
     reg_w[i] = reg.coef_
     reg_b[i] = reg.intercept_
@@ -127,7 +127,7 @@ reg_w = np.zeros((num_token,num_dim,num_features)).astype(np.float32)
 reg_b = np.zeros((num_token,num_dim)).astype(np.float32)
 pred_clip = np.zeros_like(test_clip)
 for i in range(num_token):
-    reg = skl.Ridge(alpha=100000, max_iter=50000, fit_intercept=True) # old alpha=100000
+    reg = skl.Ridge(alpha=10000, max_iter=50000, fit_intercept=True)
     reg.fit(eeg_train, train_clip[:,i])
 
     reg_w[i] = reg.coef_
