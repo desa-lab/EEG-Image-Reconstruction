@@ -1,4 +1,5 @@
 # Visual Reconstruction with Latent Diffusion through Linear Mapping
+Check out the preprint: [Image Reconstruction from Electroencephalography Using Latent Diffusion](https://arxiv.org/abs/2404.01250)
 ![reconstructions](results/thingseeg2_preproc/sub-01/diffusion_recon_plot_ordered_by_performance.png)
 Example reconstructions for subject 1. Reconstructions with pairwise correlation from best to worst for the final CLIP embedding. Each row of images with blue frames are the ground truth images. Each row of images with green frames directly under the blue-framed images correspond to the reconstruction of those images.
 
