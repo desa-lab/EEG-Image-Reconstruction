@@ -13,17 +13,42 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser(description='Argument Parser')
 parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
+parser.add_argument("-size", "--size",help="Size",default=16540)
+parser.add_argument('-avg', '--average', help='Number of averages', default='')
+parser.add_argument('-duration', '--duration', help='Duration', default=80)
+parser.add_argument('-seed', '--seed', help='Random Seed', default=0)
 parser.add_argument("-ordered", "--ordered_by_performance",help="Ordered by performance",default=False)
+parser.add_argument('-vdvae', '--vdvae', help='Using VDVAE', default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument('-clipvision', '--clipvision', help='Using Clipvision', default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument('-cliptext', '--cliptext', help='Using Cliptext', default=True, action=argparse.BooleanOptionalAction)
 args = parser.parse_args()
 sub=int(args.sub)
-# assert sub in [0,1,2,5,7]
 ordered_by_performance = args.ordered_by_performance
+train_size=int(args.size)
+average=args.average
+duration=int(args.duration)
+seed=int(args.seed)
+using_vdvae=args.vdvae
+using_clipvision=args.clipvision
+using_cliptext=args.cliptext
+if average != '' or train_size != 16540 or duration != 80:
+    param = f'_{train_size}avg{average}_dur{duration}'
+else:
+    param = ''
+if not using_vdvae:
+    param += '_novdvae'
+if not using_clipvision:
+    param += '_noclipvision'
+if not using_cliptext:
+    param += '_nocliptext'
+if seed != 0:
+    param += f'_seed{seed}'
 
-recon_dir = 'results/thingseeg2_preproc/sub-01/'
+recon_dir = f'results/thingseeg2_preproc/sub-{sub:02d}/'
 image_ids = list(range(200))
 if ordered_by_performance:
 
-    feats_dir = 'cache/thingseeg2_preproc/eval_features/sub-01/versatile_diffusion'
+    feats_dir = f'cache/thingseeg2_preproc/eval_features/sub-{sub:02d}/versatile_diffusion{param}'
     test_feats_dir = 'cache/thingseeg2_test_images_eval_features'
 
     def pairwise_corr_all(ground_truth, predictions):
@@ -102,9 +127,9 @@ if ordered_by_performance:
 def load_test_image(image_id):
     return mpimg.imread(f'data/thingseeg2_metadata/test_images_direct/{image_id}.png')
 def load_versatile_diffusion_image(image_id):
-    return mpimg.imread(recon_dir + f'versatile_diffusion/{image_id}.png')
+    return mpimg.imread(recon_dir + f'versatile_diffusion{param}/{image_id}.png')
 def load_vdvae_image(image_id):
-    return mpimg.imread(recon_dir + f'vdvae/{image_id}.png')
+    return mpimg.imread(recon_dir + f'vdvae{param}/{image_id}.png')
 # Load stimulus images
 stimulus_images = [load_test_image(image_id) for image_id in image_ids]
 # Load reconstructed images
@@ -132,9 +157,9 @@ for row in range(10):
 plt.subplots_adjust(wspace=0.02, hspace=0.02)
 
 if ordered_by_performance:
-    plt.savefig(recon_dir+'diffusion_recon_plot_ordered_by_performance.png',bbox_inches='tight')
+    plt.savefig(recon_dir+f'diffusion_recon_plot_ordered_by_performance{param}.png',bbox_inches='tight')
 else:
-    plt.savefig(recon_dir+'diffusion_recon_plot.png',bbox_inches='tight')
+    plt.savefig(recon_dir+f'diffusion_recon_plot{param}.png',bbox_inches='tight')
 
 # Load reconstructed images
 reconstructed_images = [load_vdvae_image(image_id) for image_id in image_ids]
@@ -161,6 +186,6 @@ for row in range(10):
 plt.subplots_adjust(wspace=0.02, hspace=0.02)
 
 if ordered_by_performance:
-    plt.savefig(recon_dir+'vdvae_recon_plot_ordered_by_performance.png',bbox_inches='tight')
+    plt.savefig(recon_dir+f'vdvae_recon_plot_ordered_by_performance{param}.png',bbox_inches='tight')
 else:
-    plt.savefig(recon_dir+'vdvae_recon_plot.png',bbox_inches='tight')
+    plt.savefig(recon_dir+f'vdvae_recon_plot{param}.png',bbox_inches='tight')

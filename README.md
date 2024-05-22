@@ -102,7 +102,6 @@ python thingseeg2_data_preparation_scripts/evaluation_extract_features_from_test
 ```
 python thingseeg2_scripts/train_regression.py 
 python thingseeg2_scripts/reconstruct_from_embeddings.py 
-python thingseeg2_scripts/evaluation_extract_features.py 
 python thingseeg2_scripts/evaluate_reconstruction.py 
 python thingseeg2_scripts/plot_reconstructions.py -ordered True
 ```

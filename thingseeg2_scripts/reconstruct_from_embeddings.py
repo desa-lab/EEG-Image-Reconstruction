@@ -6,15 +6,67 @@ import os
 from scipy.spatial.distance import correlation
 from tqdm import tqdm
 
-gpu1 = 0
-gpu2 = 0
+import argparse
+parser = argparse.ArgumentParser(description='Argument Parser')
+parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
+parser.add_argument("-size", "--size",help="Size",default=16540)
+parser.add_argument('-avg', '--average', help='Number of averages', default='')
+parser.add_argument('-duration', '--duration', help='Duration', default=80)
+parser.add_argument('-dnn', '--using_dnn', help='Using Deep Neural Netoworks', default=False, action=argparse.BooleanOptionalAction)
+parser.add_argument('-seed', '--seed', help='Random Seed', default=0)
 
-pred_autokl = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_vdvae.npy')
-pred_cliptext = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_cliptext.npy')
-pred_clipvision = np.load('cache/thingseeg2_preproc/predicted_embeddings/sub-01/regress_clipvision.npy')
+parser.add_argument("-gpu1", "--gpu1",help="GPU number 1",default=0)
+parser.add_argument("-gpu2", "--gpu2",help="GPU number 2",default=0)
+parser.add_argument("-bs", "--bs",help="Batch Size",default=30)
+parser.add_argument("-diff_str", "--diff_str",help="Diffusion Strength",default=0.75)
+parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4)
+parser.add_argument('-vdvae', '--vdvae', help='Using VDVAE', default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument('-clipvision', '--clipvision', help='Using Clipvision', default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument('-cliptext', '--cliptext', help='Using Cliptext', default=True, action=argparse.BooleanOptionalAction)
 
-vdvae_recon_dir = 'results/thingseeg2_preproc/sub-01/vdvae/'
-diffusion_recon_dir = 'results/thingseeg2_preproc/sub-01/versatile_diffusion/'
+args = parser.parse_args()
+sub=int(args.sub)
+train_size=int(args.size)
+average=args.average
+duration=int(args.duration)
+using_dnn=args.using_dnn
+seed=int(args.seed)
+using_vdvae=args.vdvae
+using_clipvision=args.clipvision
+using_cliptext=args.cliptext
+if average != '' or train_size != 16540 or duration != 80:
+    param = f'_{train_size}avg{average}_dur{duration}'
+else:
+    param = ''
+
+
+# if using_dnn:
+#     param += '_dnn'
+
+gpu1 = int(args.gpu1)
+gpu2 = int(args.gpu2)
+
+pred_autokl = np.load(f'cache/thingseeg2_preproc/predicted_embeddings/sub-{sub:02d}/regress_vdvae{param}.npy')
+pred_cliptext = np.load(f'cache/thingseeg2_preproc/predicted_embeddings/sub-{sub:02d}/regress_cliptext{param}.npy')
+pred_clipvision = np.load(f'cache/thingseeg2_preproc/predicted_embeddings/sub-{sub:02d}/regress_clipvision{param}.npy')
+if using_dnn:
+    pred_clipvision = np.load(f'cache/thingseeg2_preproc/predicted_embeddings/sub-{sub:02d}/dnn_clipvision{param}.npy')
+print(pred_autokl.shape, pred_cliptext.shape, pred_clipvision.shape)
+
+if not using_vdvae:
+    param += '_novdvae'
+if not using_clipvision:
+    param += '_noclipvision'
+if not using_cliptext:
+    param += '_nocliptext'
+if seed != 0:
+    param += f'_seed{seed}'
+
+print(param)
+vdvae_recon_dir = f'results/thingseeg2_preproc/sub-{sub:02d}/vdvae{param}/'
+diffusion_recon_dir = f'results/thingseeg2_preproc/sub-{sub:02d}/versatile_diffusion{param}/'
+if using_dnn:
+    diffusion_recon_dir = f'results/thingseeg2_preproc/sub-{sub:02d}/versatile_diffusion{param}_dnn/'
 
 
 
@@ -52,13 +104,6 @@ from PIL import Image
 import torchvision.transforms as T
 import pickle
 
-import argparse
-parser = argparse.ArgumentParser(description='Argument Parser')
-# parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
-parser.add_argument("-bs", "--bs",help="Batch Size",default=30)
-args = parser.parse_args()
-# sub=int(args.sub)
-# assert sub in [1,2,5,7]
 batch_size=int(args.bs)
 
 print('Libs imported')
@@ -129,8 +174,8 @@ def sample_from_hier_latents(latents,sample_ids):
 
 #samples = []
 
-torch.manual_seed(0)
-torch.cuda.manual_seed(0)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
 
 for i in range(int(np.ceil(200/batch_size))):
   print(i*batch_size)
@@ -176,16 +221,15 @@ from lib.cfg_helper import get_command_line_args, cfg_initiates, load_cfg_yaml
 import matplotlib.pyplot as plt
 from skimage.transform import resize, downscale_local_mean
 
-import argparse
-parser = argparse.ArgumentParser(description='Argument Parser')
-# parser.add_argument("-sub", "--sub",help="Subject Number",default=1)
-parser.add_argument("-diff_str", "--diff_str",help="Diffusion Strength",default=0.75)
-parser.add_argument("-mix_str", "--mix_str",help="Mixing Strength",default=0.4)
-args = parser.parse_args()
-# sub=int(args.sub)
-# assert sub in [1,2,5,7]
-strength = 0.75 # 0.75 normal, 0.99 max
-mixing = 0.4 # 0 for pure clipvision, 1 for pure cliptext
+
+strength = args.diff_str # 0.75 normal, 0.99 max
+if not using_vdvae:
+    strength = 0.99
+mixing = args.mix_str # 0 for pure clipvision, 1 for pure cliptext
+if not using_clipvision:
+    mixing = 0.99
+if not using_cliptext:
+    mixing = 0
 
 
 def regularize_image(x):
@@ -243,12 +287,13 @@ xtype = 'image'
 ctype = 'prompt'
 net.autokl.half()
 
-torch.manual_seed(0)
-torch.cuda.manual_seed(0)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
 for im_id in range(len(pred_cliptext)):
 
     zim = Image.open(vdvae_recon_dir + '{}.png'.format(im_id))
-    # zim = Image.new('RGB', (64, 64), (128, 128, 128))
+    if not using_vdvae:
+        zim = Image.new('RGB', (64, 64), (128, 128, 128))
    
     zim = regularize_image(zim)
     zin = zim*2 - 1
@@ -286,12 +331,18 @@ for im_id in range(len(pred_cliptext)):
     sampler.model.model.diffusion_model.device='cuda:' + str(gpu2)
     sampler.model.model.diffusion_model.half().cuda(gpu2)
     #mixing = 0.4
+    first_conditioning=[uim, cim]
+    second_conditioning=[utx, ctx]
+    if not using_cliptext:
+        second_conditioning = [utx, utx]
+    if not using_clipvision:
+        first_conditioning = [uim, uim]
     
     z = sampler.decode_dc(
         x_latent=z_enc,
-        first_conditioning=[uim, cim],
+        first_conditioning=first_conditioning,
         # first_conditioning=[uim, uim],
-        second_conditioning=[utx, ctx],
+        second_conditioning=second_conditioning,
         # second_conditioning=[utx, utx],
         t_start=t_enc,
         unconditional_guidance_scale=scale,

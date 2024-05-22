@@ -11,3 +11,4 @@ torch==2.1.1
 torchaudio==2.1.1
 torchvision==0.16.1
 transformers==4.19.2
+umap-learn==0.5.6
