@@ -3,4 +3,7 @@
 # Except this file
 !.gitignore
 !sub-01/
-# !fig_performance.png
+!fig_performance.png
+!fig_ablations.png
+!fig_across_duration.png
+!fig_CLIP_across_size_num_avg.png

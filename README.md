@@ -4,7 +4,7 @@ Check out the preprint: [Image Reconstruction from Electroencephalography Using 
 Example reconstructions for subject 1. Reconstructions with pairwise correlation from best to worst for the final CLIP embedding. Each row of images with blue frames are the ground truth images. Each row of images with green frames directly under the blue-framed images correspond to the reconstruction of those images.
 
 ## UMAP Mapping
-![umap](figures/umap.png)
+![umap](results/thingseeg2_preproc/sub-01/umap_CLIP.png)
 UMAP of Final CLIP Embeddings for ground truth (blue) and reconstructed images (green) from subject 1. The transparency level as well as the size of the green images indicate the correlation of CLIP vector between the corresponding reconstructed image and ground truth image pair. The ground truth images themselves form two clusters of images: animals and food, which reflects the 2 most prominent clusters in the reconstructed images as well.
 
 ## Feature transfer through narrow time segment swapping
@@ -15,7 +15,9 @@ Examples of data segment swapping. Each pair of rows represents the 2 images tha
 <!-- ![in_context](figures/in_context.png)
 ![across_subjects](figures/across_subjects.png) -->
 <!-- <img src="figures/in_context.png" width="500" height="300"> -->
-<img src="figures/in_context.png" width="300"> <img src="figures/across_subjects.png" width="200">
+<img src="results/thingseeg2_preproc/fig_performance.png" width="200"> <img src="results/thingseeg2_preproc/fig_across_duration.png" width="200"><img src="results/thingseeg2_preproc/fig_ablations.png" width="200">
+
+<img src="results/thingseeg2_preproc/fig_CLIP_across_size_num_avg.png" width="400">
 
 
 
@@ -104,6 +106,41 @@ python thingseeg2_scripts/train_regression.py
 python thingseeg2_scripts/reconstruct_from_embeddings.py 
 python thingseeg2_scripts/evaluate_reconstruction.py 
 python thingseeg2_scripts/plot_reconstructions.py -ordered True
+python thingseeg2_scripts/plot_umap_CLIP.py
+```
+
+## Reproducing figures
+The reconstruction script assumes you have 7 GPUs, remove parallelism and set all GPUs to 0 if you only have 1 GPU.\
+
+1. Reproducing `results/thingseeg2_preproc/fig_performance.png`:
+```
+thingseeg2_figure_scripts/train_all_subjects.sh
+thingseeg2_figure_scripts/reconstruct_all_subjects.sh
+thingseeg2_figure_scripts/evaluate_all_subjects.sh
+python thingseeg2_figure_scripts/fig_performance.py
+```
+
+2. Reproducing `results/thingseeg2_preproc/fig_across_duration.png`:
+```
+thingseeg2_figure_scripts/train_across_duration.sh
+thingseeg2_figure_scripts/reconstruct_across_duration.sh
+thingseeg2_figure_scripts/evaluate_across_duration.sh
+python thingseeg2_figure_scripts/fig_across_durations.py
+```
+
+3. Reproducing `results/thingseeg2_preproc/fig_ablations.png` (assuming you have completed `fig_performance.png`):
+```
+thingseeg2_figure_scripts/reconstruct_ablation.sh
+thingseeg2_figure_scripts/evaluate_ablation.sh
+python thingseeg2_figure_scripts/fig_ablations.py
+```
+
+4. Reproducing `results/thingseeg2_preproc/fig_CLIP_across_size_num_avg.png`:
+```
+thingseeg2_figure_scripts/train_across_size_num_avg.sh
+thingseeg2_figure_scripts/reconstruct_across_size_num_avg.sh
+thingseeg2_figure_scripts/evaluate_across_size_num_avg.sh
+python thingseeg2_figure_scripts/fig_across_size_num_avg.py
 ```
 
 
