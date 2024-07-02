@@ -115,15 +115,15 @@ pip install -r requirements.txt
 2. Download [preprocessed eeg data](https://files.de-1.osf.io/v1/resources/anp5v/providers/osfstorage/?zip=), unzip "sub01", "sub02", etc under data/thingseeg2_preproc.
 + create a folder called `thingseeg2_preproc`
 
-![create_folder](figures\create_thingseeg2_preproc.png "create_folder")
+![create_folder](figures/create_thingseeg2_preproc.png "create_folder")
 
 + copy and paste the content of `osfstorage-archive.zip` into `thingseeg2_preproc`
 
-![copy_content](figures\copy_content.png "copy_content")
+![copy_content](figures/copy_content.png "copy_content")
 
 + navigate to `thingseeg2_preproc`, unzip each zip files one by one
 
-![extract_here](figures\extract_here.png "extract_here")
+![extract_here](figures/extract_here.png "extract_here")
 
 + open terminal, navigate to project root directory, and run this command
 ```
