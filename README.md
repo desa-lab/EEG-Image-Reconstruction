@@ -25,6 +25,8 @@ Examples of data segment swapping. Each pair of rows represents the 2 images tha
 This section covers the visual reconstruction using the THINGS-EEG2 dataset
 
 ## Getting started
+
+### For mac and linux:
 1. Follow instructions from brain-diffusor to create the python environment\
 Note: please make sure tokenizers==0.12.1 and transformers==4.19.2. For the diffusion environment, you may use `requirement.txt`
 
@@ -98,6 +100,34 @@ python thingseeg2_data_preparation_scripts/vdvae_extract_features.py
 python thingseeg2_data_preparation_scripts/clipvision_extract_features.py 
 python thingseeg2_data_preparation_scripts/cliptext_extract_features.py 
 python thingseeg2_data_preparation_scripts/evaluation_extract_features_from_test_images.py 
+```
+
+### For Windows:
+1. Follow instructions from brain-diffusor to create the python environment\
+Note: please make sure tokenizers==0.12.1 and transformers==4.19.2. For the diffusion environment, you may use `requirement.txt`
+
+```
+virtualenv pyenv --python=3.10.12
+pyenv\Scripts\activate
+pip install -r requirements.txt
+```
+
+2. Download [preprocessed eeg data](https://files.de-1.osf.io/v1/resources/anp5v/providers/osfstorage/?zip=), unzip "sub01", "sub02", etc under data/thingseeg2_preproc.
++ create a folder called `thingseeg2_preproc`
+
+![create_folder](figures\create_thingseeg2_preproc.png "create_folder")
+
++ copy and paste the content of `osfstorage-archive.zip` into `thingseeg2_preproc`
+
+![copy_content](figures\copy_content.png "copy_content")
+
++ navigate to `thingseeg2_preproc`, unzip each zip files one by one
+
+![extract_here](figures\extract_here.png "extract_here")
+
++ open terminal, navigate to project root directory, and run this command
+```
+python thingseeg2_data_preparation_scripts/prepare_thingseeg2_data.py 
 ```
  
 ## Training and reconstruction
