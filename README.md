@@ -109,7 +109,7 @@ Note: please make sure tokenizers==0.12.1 and transformers==4.19.2. For the diff
 ```
 virtualenv pyenv --python=3.10.12
 pyenv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-win.txt
 ```
 
 2. Download [preprocessed eeg data](https://files.de-1.osf.io/v1/resources/anp5v/providers/osfstorage/?zip=), unzip "sub01", "sub02", etc under data/thingseeg2_preproc.
