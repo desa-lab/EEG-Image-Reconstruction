@@ -157,7 +157,21 @@ python thingseeg2_data_preparation_scripts/save_thingseeg2_concepts.py
 + [vd-four-flow-v1-0-fp16-deprecated.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/vd-four-flow-v1-0-fp16-deprecated.pth)
 + [kl-f8.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/kl-f8.pth)
 + [optimus-vae.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/optimus-vae.pth)
++ Navigate into `vdvae/model/`, move `imagenet64-iter-1600000-log.jsonl`, `imagenet64-iter-1600000-model.th`, `imagenet64-iter-1600000-model-ema.th`, and `imagenet64-iter-1600000-opt.th` here
 
+![move_weights](figures/move_weights.png "move_weights")
+
++ Navigate into `versatile_diffusion/pretrained/`, move `vd-four-flow-v1-0-fp16-deprecated.pth`, `kl-f8.pth`, and `optimus-vae.pth` here
+
+![move_weights2](figures/move_weights2.png "move_weights2")
+
+5. Extract train and test latent embeddings from images and text labels. Run these commands from the project root directory
+```
+python thingseeg2_data_preparation_scripts/vdvae_extract_features.py 
+python thingseeg2_data_preparation_scripts/clipvision_extract_features.py 
+python thingseeg2_data_preparation_scripts/cliptext_extract_features.py 
+python thingseeg2_data_preparation_scripts/evaluation_extract_features_from_test_images.py 
+```
 
 ## Training and reconstruction
 ```
