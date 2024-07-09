@@ -129,7 +129,36 @@ pip install -r requirements.txt
 ```
 python thingseeg2_data_preparation_scripts/prepare_thingseeg2_data.py 
 ```
+
+3. Download [ground truth images](https://files.de-1.osf.io/v1/resources/y63gw/providers/osfstorage/?zip=), unzip "training_images", "test_images" under data/thingseeg2_metadata
++ create a folder called `thingseeg2_metadata`
+
+![create_folder2](figures/create_thingseeg2_metadata.png "create_folder2")
  
++ copy and paste the content of `osfstorage-archive (1).zip` into `thingseeg2_metadata`
+
+![copy_content2](figures/copy_content2.png "copy_content2")
+
++ navigate to `thingseeg2_metadata`, unzip `training_images.zip` and `test_images.zip`
+
+![extract_here2](figures/extract_here2.png "extract_here2")
+
++ open terminal, navigate to project root directory, and run these commands
+```
+python thingseeg2_data_preparation_scripts/save_thingseeg2_images.py
+python thingseeg2_data_preparation_scripts/save_thingseeg2_concepts.py
+```
+
+4. Download VDVAE and Versatile Diffusion weights
++ [imagenet64-iter-1600000-log.jsonl](https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/imagenet64-iter-1600000-log.jsonl)
++ [imagenet64-iter-1600000-model.th](https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/imagenet64-iter-1600000-model.th)
++ [imagenet64-iter-1600000-model-ema.th](https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/imagenet64-iter-1600000-model-ema.th)
++ [imagenet64-iter-1600000-opt.th](https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets-2/imagenet64-iter-1600000-opt.th)
++ [vd-four-flow-v1-0-fp16-deprecated.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/vd-four-flow-v1-0-fp16-deprecated.pth)
++ [kl-f8.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/kl-f8.pth)
++ [optimus-vae.pth](https://huggingface.co/shi-labs/versatile-diffusion/resolve/main/pretrained_pth/optimus-vae.pth)
+
+
 ## Training and reconstruction
 ```
 python thingseeg2_scripts/train_regression.py 
